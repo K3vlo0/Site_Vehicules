@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   background: #111;
   /* Ajoutez votre image de fond ici : */
-  background-image: url('./images/day-of-decay-background.png'); */
+  background-image: url('./images/day-of-decay-background.png'); 
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -377,4 +377,5 @@ h1 {
     height: 50px;
   }
 }
+
 
