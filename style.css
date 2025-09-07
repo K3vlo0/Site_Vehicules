@@ -117,7 +117,7 @@ h1 {
   transform: translateX(0) scale(1);
   filter: blur(0px);
   z-index: 10;
-  border: 2px solid #ff4747;
+  border: 2px solid #CD853F;
   pointer-events: auto;
 }
 
@@ -376,4 +376,5 @@ h1 {
     height: 50px;
   }
 }
+
 
