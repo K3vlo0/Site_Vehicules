@@ -5,117 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catalogue véhicules - Serveur Post-Apo</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <h1>CATALOGUE DAY OF DECAY</h1>
-   <!-- Navigation par catégories -->
+  <h1>🚗 Catalogue des véhicules</h1>
+  
+  <!-- Navigation par catégories -->
   <div class="category-nav">
     <button class="category-btn active" data-category="all">Tous</button>
     <button class="category-btn" data-category="suv">SUV</button>
     <button class="category-btn" data-category="motos">Motos</button>
     <button class="category-btn" data-category="camions">Camions</button>
-    <button class="category-btn" data-category="tout-terrain">Tout-Terrain</button>
+    <button class="category-btn" data-category="voitures">Voitures</button>
   </div>
   
   <div class="container">
     <!-- SUV -->
-    <div class="vehicle-card active" data-category="suv">
+    <div class="vehicle-card active" data-category="suv" data-vehicle="amarok">
       <img src="images/amarok.png" alt="Rapide et Robuste">
       <h2>Amarok</h2>
       <div class="vehicle-category">SUV</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Essence</li>
-        <li>👥 Places  : 6</li>
+        <li>👥 Places : 6</li>
         <li>📦 Coffre : 250kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
 
-    <div class="vehicle-card" data-category="suv">
+    <div class="vehicle-card" data-category="suv" data-vehicle="4rune">
       <img src="images/4RUNE.png" alt="4x4 4rune">
       <h2>4rune</h2>
       <div class="vehicle-category">SUV</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Essence</li>
-        <li>👥 Places  : 4</li>
+        <li>👥 Places : 4</li>
         <li>📦 Coffre : 250kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
 
-    <div class="vehicle-card" data-category="suv">
+    <div class="vehicle-card" data-category="suv" data-vehicle="indiana">
       <img src="images/indiana.png" alt="Pick-Up, toujours pratique">
       <h2>Indiana</h2>
       <div class="vehicle-category">SUV</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Essence</li>
-        <li>👥 Places  : 6</li>
+        <li>👥 Places : 6</li>
         <li>📦 Coffre : 250kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
 
     <!-- Motos -->
-    <div class="vehicle-card" data-category="motos">
+    <div class="vehicle-card" data-category="motos" data-vehicle="babayaga2">
       <img src="images/babayaga2.png" alt="Moto de Biker">
       <h2>Babayaga2</h2>
       <div class="vehicle-category">Moto</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Diesel</li>
-        <li>👥 Places  : 2</li>
+        <li>👥 Places : 2</li>
         <li>📦 Coffre : 0kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
-
-    <div class="vehicle-card" data-category="tout-terrain">
-      <img src="images/blazer6.png" alt="Quad Apocalyptic">
-      <h2>Blazer6</h2>
-      <div class="vehicle-category">moto</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places  : 1</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
-    </div>
-  </div>
 
     <!-- Camions -->
-    <div class="vehicle-card" data-category="camions">
-      <img src="images/barrage.png" alt="Parfait pour assurer les convoi">
+    <div class="vehicle-card" data-category="camions" data-vehicle="barrage2">
+      <img src="images/barrage.png" alt="Parfait pour assurer les convois">
       <h2>Barrage2</h2>
       <div class="vehicle-category">Camion</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Essence</li>
-        <li>👥 Places  : 2</li>
+        <li>👥 Places : 2</li>
         <li>📦 Coffre : 250kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
 
-    <!-- Tout-Terrain -->
-    <div class="vehicle-card" data-category="tout-terrain">
+    <!-- Voitures -->
+    <div class="vehicle-card" data-category="voitures" data-vehicle="apocalyptic">
       <img src="images/apocalyptic.png" alt="Roi du franchissement">
       <h2>Apocalyptic</h2>
-      <div class="vehicle-category">Tout-Terrain</div>
+      <div class="vehicle-category">Voiture</div>
       <ul>
         <li>💰 Prix : 30 EURO</li>
         <li>⛽ Carburant : Diesel</li>
-        <li>👥 Places  : 2</li>
+        <li>👥 Places : 2</li>
         <li>📦 Coffre : 250kg</li>
       </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
     </div>
+
+    <div class="vehicle-card" data-category="voitures" data-vehicle="blazer6">
+      <img src="images/blazer6.png" alt="Quad Apocalyptic">
+      <h2>Blazer6</h2>
+      <div class="vehicle-category">Quad</div>
+      <ul>
+        <li>💰 Prix : 30 EURO</li>
+        <li>⛽ Carburant : Essence</li>
+        <li>👥 Places : 1</li>
+        <li>📦 Coffre : 250kg</li>
+      </ul>
+      <button class="view-3d-btn">🔍 Voir en 3D</button>
+    </div>
+  </div>
 
   <div class="controls">
     <button id="prev" aria-label="Précédent"></button>
     <button id="next" aria-label="Suivant"></button>
   </div>
 
+  <!-- Modal 3D Viewer -->
+  <div id="viewer3d-modal" class="modal-3d">
+    <div class="modal-content-3d">
+      <div class="modal-header">
+        <h2 id="modal-vehicle-name">Véhicule 3D</h2>
+        <button class="close-3d">&times;</button>
+      </div>
+      <div id="threejs-container"></div>
+      <div class="controls-3d">
+        <p>🖱️ Clic gauche : Rotation | 🖱️ Molette : Zoom | 🖱️ Clic droit : Déplacement</p>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
