@@ -112,6 +112,24 @@ h1 {
   pointer-events: auto;
 }
 
+/* Bouton précédent - main gauche */
+#prev {
+  background-image: url('./images/hand-left.png');
+  background-color: transparent;
+}
+
+/* Bouton suivant - main droite */
+#next {
+  background-image: url('./images/hand-right.png');
+  background-color: transparent;
+}
+
+/* Supprime complètement les emojis fallback */
+#prev::before,
+#next::before {
+  display: none !important;
+}
+
 /* Animation au survol */
 .vehicle-card:hover:not(.active) {
   filter: blur(1px) !important;
@@ -301,4 +319,5 @@ h1 {
     height: 50px;
   }
 }
+
 
