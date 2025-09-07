@@ -38,13 +38,13 @@ body {
 
 .category-btn:hover {
   background: rgba(255, 71, 71, 0.8);
-  border-color: #ff4747;
+  border-color: #CD853F;
   transform: scale(1.05);
 }
 
 .category-btn.active {
-  background: #ff4747;
-  border-color: #ff4747;
+  background: #CD853F;
+  border-color: #CD853F;
   color: white;
 }
 
@@ -65,7 +65,7 @@ body {
 h1 {
   margin: 20px;
   font-size: 2rem;
-  color: #ff4747;
+  color: #CD853F;
 }
 
 .container {
@@ -118,7 +118,7 @@ h1 {
   transform: translateX(0) scale(1);
   filter: blur(0px);
   z-index: 10;
-  border: 2px solid #ff4747;
+  border: 2px solid #CD853F;
   pointer-events: auto;
 }
 
@@ -377,6 +377,7 @@ h1 {
     height: 50px;
   }
 }
+
 
 
 
