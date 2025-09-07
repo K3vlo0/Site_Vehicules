@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Metal Mania, sans-serif;
   background: #111;
   /* Ajoutez votre image de fond ici : */
   background-image: url('./images/day-of-decay-background.png'); 
@@ -377,6 +377,7 @@ h1 {
     height: 50px;
   }
 }
+
 
 
 
