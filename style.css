@@ -8,6 +8,16 @@ body {
   overflow-x: hidden;
 }
 
+#prev {
+  background-image: url('./images/hand-left.png');
+  background-color: transparent;
+}
+
+#next {
+  background-image: url('./images/hand-right.png');
+  background-color: transparent;
+}
+
 h1 {
   margin: 20px;
   font-size: 2rem;
@@ -291,3 +301,4 @@ h1 {
     height: 50px;
   }
 }
+
