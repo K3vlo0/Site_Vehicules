@@ -2,7 +2,8 @@ body {
   font-family: Metal Mania, sans-serif;
   background: #111;
   /* Ajoutez votre image de fond ici : */
-  background-image: url('./images/day-of-decay-background.png');  background-size: cover;
+  background-image: url('./images/day-of-decay-background.png');
+  background-size: cover;
   background-attachment: fixed;
   background-position: center;
   color: #eee;
@@ -25,7 +26,7 @@ body {
 .category-btn {
   padding: 10px 20px;
   background: rgba(34, 34, 34, 0.9);
-  border: 2px solid #CD853F;
+  border: 2px solid #333;
   border-radius: 25px;
   color: #eee;
   cursor: pointer;
@@ -117,7 +118,7 @@ h1 {
   transform: translateX(0) scale(1);
   filter: blur(0px);
   z-index: 10;
-  border: 2px solid #CD853F;
+  border: 2px solid #ff4747;
   pointer-events: auto;
 }
 
@@ -376,5 +377,6 @@ h1 {
     height: 50px;
   }
 }
+
 
 
