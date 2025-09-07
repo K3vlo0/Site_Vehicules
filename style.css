@@ -3,7 +3,7 @@ body {
   background: #111;
   /* Ajoutez votre image de fond ici : */
   background-image: url('./images/day-of-decay-background.png');
-  background-size: cover;
+  background-size: scale-down;
   background-attachment: fixed;
   background-position: center;
   color: #eee;
@@ -221,7 +221,7 @@ h1 {
 .vehicle-card img {
   width: 100%;
   height: 180px;
-  object-fit: cover;
+  object-fit: scale-down;
   border-radius: 8px;
   margin-bottom: 15px;
 }
@@ -377,6 +377,7 @@ h1 {
     height: 50px;
   }
 }
+
 
 
 
