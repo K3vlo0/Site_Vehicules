@@ -25,7 +25,7 @@ body {
 .category-btn {
   padding: 10px 20px;
   background: rgba(34, 34, 34, 0.9);
-  border: 2px solid #333;
+  border: 2px solid #CD853F;
   border-radius: 25px;
   color: #eee;
   cursor: pointer;
@@ -376,3 +376,4 @@ h1 {
     height: 50px;
   }
 }
+
