@@ -19,17 +19,17 @@ h1 {
   justify-content: center;
   align-items: center;
   height: 60vh;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
-  padding: 0 20px;
-  perspective: 1000px; /* Pour l'effet 3D */
+  padding: 0 50px;
+  gap: 20px;
 }
 
 .vehicle-card {
   width: 300px;
-  min-width: 280px;
+  min-width: 300px;
+  max-width: 300px;
   padding: 20px;
-  margin: 0 15px;
   border-radius: 12px;
   background: linear-gradient(145deg, #1a1a1a, #222);
   border: 1px solid #333;
@@ -37,46 +37,56 @@ h1 {
   transition: all 0.6s ease;
   text-align: left;
   box-sizing: border-box;
-  flex-shrink: 0;
   
-  /* Effet par défaut : flou et réduit */
-  filter: blur(3px);
-  opacity: 0.6;
-  transform: scale(0.85);
+  /* Style par défaut : flou et petit */
+  filter: blur(2px);
+  opacity: 0.5;
+  transform: scale(0.8);
+  cursor: pointer;
 }
 
 .vehicle-card.active {
-  /* Carte active : nette et grande */
+  /* Carte active : nette et normale */
   filter: blur(0px);
   opacity: 1;
   transform: scale(1);
   z-index: 10;
+  border: 2px solid #ff4747;
+}
+
+/* Animation au survol */
+.vehicle-card:hover:not(.active) {
+  filter: blur(1px);
+  opacity: 0.7;
+  transform: scale(0.85);
 }
 
 .controls {
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 0 20px;
 }
 
 .controls button {
-  margin: 10px 5px;
-  padding: 10px 20px;
+  margin: 10px 10px;
+  padding: 12px 24px;
   background: #ff4747;
   border: none;
   border-radius: 8px;
   color: white;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s;
   font-size: 1rem;
+  font-weight: bold;
 }
 
 .controls button:hover {
   background: #ff3030;
+  transform: scale(1.05);
 }
 
 .vehicle-card img {
   width: 100%;
-  max-height: 200px;
+  height: 200px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -86,6 +96,7 @@ h1 {
   color: #ff4747;
   margin-top: 0;
   margin-bottom: 15px;
+  font-size: 1.4rem;
 }
 
 .vehicle-card ul {
@@ -96,53 +107,72 @@ h1 {
 
 .vehicle-card li {
   margin: 8px 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   padding: 5px 0;
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .container {
-    padding: 0 10px;
+    padding: 0 30px;
+    gap: 15px;
   }
   
   .vehicle-card {
     width: 280px;
-    min-width: 250px;
-    margin: 0 10px;
+    min-width: 280px;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 0 20px;
+    gap: 10px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .vehicle-card {
+    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+  
+  .vehicle-card.active {
+    transform: scale(1);
   }
 }
 
 @media (max-width: 768px) {
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 15px 10px;
   }
   
   .container {
     height: 70vh;
-    padding: 0 5px;
+    padding: 0 15px;
+    gap: 15px;
   }
   
   .vehicle-card {
-    width: 250px;
-    min-width: 220px;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
     padding: 15px;
-    margin: 0 8px;
-    filter: blur(2px); /* Moins de flou sur mobile */
-  }
-  
-  .vehicle-card.active {
-    filter: blur(0px);
   }
   
   .vehicle-card img {
-    max-height: 180px;
+    height: 160px;
   }
   
   .controls button {
-    padding: 8px 16px;
-    margin: 5px 3px;
+    padding: 10px 20px;
+    margin: 8px 5px;
     font-size: 0.9rem;
   }
 }
@@ -150,30 +180,31 @@ h1 {
 @media (max-width: 480px) {
   .container {
     height: 75vh;
-    flex-direction: column; /* Empilement vertical sur très petit écran */
+    gap: 10px;
+    padding: 0 10px;
   }
   
   .vehicle-card {
-    width: 90vw;
-    max-width: 320px;
-    margin: 10px 0;
-    filter: blur(1px);
-  }
-  
-  .vehicle-card.active {
-    transform: scale(1.05); /* Légèrement plus grand sur mobile */
+    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
+    padding: 12px;
   }
   
   .vehicle-card img {
-    max-height: 150px;
+    height: 140px;
+  }
+  
+  .vehicle-card h2 {
+    font-size: 1.2rem;
   }
   
   .vehicle-card li {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   
   .controls button {
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    padding: 8px 16px;
+    font-size: 0.85rem;
   }
 }
