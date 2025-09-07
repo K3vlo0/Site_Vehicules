@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #eee;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px;
+  font-size: 2rem;
+  color: #ff4747;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.vehicle-card {
+  min-width: 300px;
+  max-width: 400px;
+  padding: 20px;
+  margin: 0 10px;
+  border-radius: 12px;
+  background: #222;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.6s ease;
+}
+
+.vehicle-card.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.controls button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #ff4747;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.controls button:hover {
+  background: #ff3030;
+}
