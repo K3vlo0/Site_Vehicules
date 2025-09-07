@@ -31,13 +31,13 @@ h1 {
   background: #222;
   box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(100%) scale(0.9);
   transition: all 0.6s ease;
 }
 
 .vehicle-card.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
 }
 
 .controls button {
@@ -83,3 +83,4 @@ h1 {
   margin: 8px 0;
   font-size: 1rem;
 }
+
