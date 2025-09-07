@@ -8,16 +8,6 @@ body {
   overflow-x: hidden;
 }
 
-#prev {
-  background-image: url('./images/hand-left.png');
-  background-color: transparent;
-}
-
-#next {
-  background-image: url('./images/hand-right.png');
-  background-color: transparent;
-}
-
 h1 {
   margin: 20px;
   font-size: 2rem;
@@ -112,24 +102,6 @@ h1 {
   pointer-events: auto;
 }
 
-/* Bouton précédent - main gauche */
-#prev {
-  background-image: url('./images/hand-left.png');
-  background-color: transparent;
-}
-
-/* Bouton suivant - main droite */
-#next {
-  background-image: url('./images/hand-right.png');
-  background-color: transparent;
-}
-
-/* Supprime complètement les emojis fallback */
-#prev::before,
-#next::before {
-  display: none !important;
-}
-
 /* Animation au survol */
 .vehicle-card:hover:not(.active) {
   filter: blur(1px) !important;
@@ -140,24 +112,55 @@ h1 {
 .controls {
   margin-top: 30px;
   padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
 }
 
 .controls button {
-  margin: 10px 10px;
-  padding: 12px 24px;
-  background: #ff4747;
+  background: none;
   border: none;
-  border-radius: 8px;
-  color: white;
   cursor: pointer;
-  transition: all 0.3s;
-  font-size: 1rem;
-  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 0;
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  font-size: 0;
+  color: transparent;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 .controls button:hover {
-  background: #ff3030;
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 12px rgba(255, 71, 71, 0.4)) brightness(1.1);
+}
+
+.controls button:active {
+  transform: scale(0.95);
+}
+
+/* Bouton précédent - main gauche */
+#prev {
+  background-image: url('./images/hand-left.png') !important;
+  background-color: transparent !important;
+}
+
+/* Bouton suivant - main droite */
+#next {
+  background-image: url('./images/hand-right.png') !important;
+  background-color: transparent !important;
+}
+
+/* Supprime complètement les emojis fallback */
+#prev::before,
+#next::before {
+  display: none !important;
 }
 
 .vehicle-card img {
@@ -319,5 +322,3 @@ h1 {
     height: 50px;
   }
 }
-
-
