@@ -2,22 +2,31 @@ const cards = document.querySelectorAll(".vehicle-card");
 let current = 0;
 
 function updateCarousel() {
-  // Supprime la classe active de toutes les cartes
   cards.forEach((card, index) => {
-    card.classList.remove("active");
+    // Supprime toutes les classes
+    card.classList.remove("active", "prev", "next", "far-prev", "far-next");
+    
+    // Calcule la position relative par rapport à la carte active
+    const position = index - current;
+    
+    if (position === 0) {
+      // Carte active (centre)
+      card.classList.add("active");
+    } else if (position === 1) {
+      // Carte suivante (droite)
+      card.classList.add("next");
+    } else if (position === -1) {
+      // Carte précédente (gauche)
+      card.classList.add("prev");
+    } else if (position === 2) {
+      // Carte lointaine droite
+      card.classList.add("far-next");
+    } else if (position === -2) {
+      // Carte lointaine gauche
+      card.classList.add("far-prev");
+    }
+    // Les autres cartes restent invisibles (pas de classe)
   });
-  
-  // Ajoute la classe active à la carte courante
-  cards[current].classList.add("active");
-  
-  // Fait défiler vers la carte active sur mobile
-  if (window.innerWidth <= 900) {
-    cards[current].scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center'
-    });
-  }
 }
 
 // Bouton suivant
@@ -49,11 +58,6 @@ cards.forEach((card, index) => {
     current = index;
     updateCarousel();
   });
-});
-
-// Détection du redimensionnement pour s'adapter
-window.addEventListener("resize", () => {
-  updateCarousel();
 });
 
 // Initialisation
