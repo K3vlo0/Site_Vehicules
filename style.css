@@ -112,16 +112,44 @@ h1 {
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .container {
-    padding: 0 30px;
-    gap: 15px;
+    gap: 12px;
   }
   
   .vehicle-card {
-    width: 280px;
-    min-width: 280px;
-    max-width: 280px;
+    width: min(220px, 16vw);
+    min-width: min(200px, 14vw);
+    padding: 12px;
+  }
+  
+  .vehicle-card img {
+    height: 120px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 15px;
+    gap: 10px;
+  }
+  
+  .vehicle-card {
+    width: min(200px, 15vw);
+    min-width: min(180px, 13vw);
+    padding: 10px;
+  }
+  
+  .vehicle-card img {
+    height: 100px;
+  }
+  
+  .vehicle-card h2 {
+    font-size: 1rem;
+  }
+  
+  .vehicle-card li {
+    font-size: 0.75rem;
   }
 }
 
