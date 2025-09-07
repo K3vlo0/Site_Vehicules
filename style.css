@@ -54,3 +54,32 @@ h1 {
 .controls button:hover {
   background: #ff3030;
 }
+
+.vehicle-card img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.vehicle-card {
+  background: linear-gradient(145deg, #1a1a1a, #222);
+  border: 1px solid #333;
+  text-align: left;
+}
+
+.vehicle-card h2 {
+  color: #ff4747;
+  margin-top: 0;
+}
+
+.vehicle-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.vehicle-card li {
+  margin: 8px 0;
+  font-size: 1rem;
+}
