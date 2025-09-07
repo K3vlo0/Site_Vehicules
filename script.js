@@ -1,64 +1,103 @@
 const cards = document.querySelectorAll(".vehicle-card");
+const categoryBtns = document.querySelectorAll(".category-btn");
 let current = 0;
+let currentCategory = 'all';
+let filteredCards = [...cards];
+
+function filterCardsByCategory(category) {
+  currentCategory = category;
+  
+  if (category === 'all') {
+    filteredCards = [...cards];
+  } else {
+    filteredCards = [...cards].filter(card => 
+      card.getAttribute('data-category') === category
+    );
+  }
+  
+  // Reset current to 0 when changing category
+  current = 0;
+  updateCarousel();
+}
 
 function updateCarousel() {
-  cards.forEach((card, index) => {
-    // Supprime toutes les classes
+  // Hide all cards first
+  cards.forEach(card => {
     card.classList.remove("active", "prev", "next", "far-prev", "far-next");
-    
-    // Calcule la position relative par rapport à la carte active
+  });
+  
+  // Only work with filtered cards
+  if (filteredCards.length === 0) return;
+  
+  filteredCards.forEach((card, index) => {
     const position = index - current;
     
     if (position === 0) {
-      // Carte active (centre)
       card.classList.add("active");
     } else if (position === 1) {
-      // Carte suivante (droite)
       card.classList.add("next");
     } else if (position === -1) {
-      // Carte précédente (gauche)
       card.classList.add("prev");
     } else if (position === 2) {
-      // Carte lointaine droite
       card.classList.add("far-next");
     } else if (position === -2) {
-      // Carte lointaine gauche
       card.classList.add("far-prev");
     }
-    // Les autres cartes restent invisibles (pas de classe)
   });
 }
 
-// Bouton suivant
+// Category navigation
+categoryBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    // Update active category button
+    categoryBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    
+    // Filter cards
+    const category = btn.getAttribute('data-category');
+    filterCardsByCategory(category);
+  });
+});
+
+// Carousel navigation
 document.getElementById("next").addEventListener("click", () => {
-  current = (current + 1) % cards.length;
-  updateCarousel();
-});
-
-// Bouton précédent
-document.getElementById("prev").addEventListener("click", () => {
-  current = (current - 1 + cards.length) % cards.length;
-  updateCarousel();
-});
-
-// Navigation clavier
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") {
-    current = (current + 1) % cards.length;
-    updateCarousel();
-  } else if (e.key === "ArrowLeft") {
-    current = (current - 1 + cards.length) % cards.length;
+  if (filteredCards.length > 0) {
+    current = (current + 1) % filteredCards.length;
     updateCarousel();
   }
 });
 
-// Clic sur une carte pour la sélectionner
+document.getElementById("prev").addEventListener("click", () => {
+  if (filteredCards.length > 0) {
+    current = (current - 1 + filteredCards.length) % filteredCards.length;
+    updateCarousel();
+  }
+});
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+  if (filteredCards.length === 0) return;
+  
+  if (e.key === "ArrowRight") {
+    current = (current + 1) % filteredCards.length;
+    updateCarousel();
+  } else if (e.key === "ArrowLeft") {
+    current = (current - 1 + filteredCards.length) % filteredCards.length;
+    updateCarousel();
+  }
+});
+
+// Click on card to select
 cards.forEach((card, index) => {
   card.addEventListener("click", () => {
-    current = index;
-    updateCarousel();
+    // Find index in filtered cards
+    const filteredIndex = filteredCards.indexOf(card);
+    if (filteredIndex !== -1) {
+      current = filteredIndex;
+      updateCarousel();
+    }
   });
 });
 
-// Initialisation
+// Initialize
 updateCarousel();
