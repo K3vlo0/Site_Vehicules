@@ -1,24 +1,23 @@
 const cards = document.querySelectorAll(".vehicle-card");
-const container = document.querySelector(".container");
 let current = 0;
 
-// Fonction pour centrer le carrousel sur la carte active
 function updateCarousel() {
   // Supprime la classe active de toutes les cartes
-  cards.forEach(card => card.classList.remove("active"));
+  cards.forEach((card, index) => {
+    card.classList.remove("active");
+  });
   
   // Ajoute la classe active à la carte courante
   cards[current].classList.add("active");
   
-  // Calcule le déplacement pour centrer la carte active
-  const cardWidth = cards[0].offsetWidth + 30; // largeur + margins
-  const containerWidth = container.offsetWidth;
-  const offset = (containerWidth / 2) - (cardWidth / 2) - (current * cardWidth);
-  
-  // Applique la transformation à toutes les cartes
-  cards.forEach((card, index) => {
-    card.style.transform = `translateX(${offset}px) scale(${index === current ? 1 : 0.85})`;
-  });
+  // Fait défiler vers la carte active sur mobile
+  if (window.innerWidth <= 900) {
+    cards[current].scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
 }
 
 // Bouton suivant
@@ -47,11 +46,14 @@ document.addEventListener("keydown", (e) => {
 // Clic sur une carte pour la sélectionner
 cards.forEach((card, index) => {
   card.addEventListener("click", () => {
-    if (index !== current) {
-      current = index;
-      updateCarousel();
-    }
+    current = index;
+    updateCarousel();
   });
+});
+
+// Détection du redimensionnement pour s'adapter
+window.addEventListener("resize", () => {
+  updateCarousel();
 });
 
 // Initialisation
