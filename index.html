@@ -24,21 +24,197 @@
     <span class="key">Echap</span> pour retour menu
   </div>
   
-<!-- Boutons sociaux -->
+<!-- Boutons sociaux avec logos rouillés -->
 <div class="social-buttons">
-  <a href="https://discord.gg/TzQaAMUzGV" target="_blank" rel="noopener noreferrer" class="social-btn discord">
-    <span class="social-icon">🎮</span>
-    Discord
+  <a href="https://top-serveurs.net/gta/dayofdecay" target="_blank" rel="noopener noreferrer" class="social-logo-btn topserveur">
+    <img src="images/top-serveurs-logo.png" alt="Top Serveurs" class="social-logo">
   </a>
-  <a href="https://www.tiktok.com/@dayofdecay_rp" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
-    <span class="social-icon">📱</span>
-    TikTok
+  
+  <a href="https://discord.gg/TzQaAMUzGV" target="_blank" rel="noopener noreferrer" class="social-logo-btn discord">
+    <img src="images/discord-logo.png" alt="Discord" class="social-logo">
   </a>
-  <a href="https://top-serveurs.net/gta/dayofdecay" target="_blank" rel="noopener noreferrer" class="social-btn topserveur">
-    <span class="social-icon">🏆</span>
-    Top Serveur
+  
+  <a href="https://www.tiktok.com/@dayofdecay_rp" target="_blank" rel="noopener noreferrer" class="social-logo-btn tiktok">
+    <img src="images/tiktok-logo.png" alt="TikTok" class="social-logo">
   </a>
 </div>
+
+<style>
+/* Boutons sociaux avec logos rouillés */
+.social-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 100;
+}
+
+.social-logo-btn {
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(139, 69, 19, 0.5);
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(40, 40, 40, 0.9));
+  backdrop-filter: blur(10px);
+}
+
+.social-logo-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(139, 69, 19, 0.1) 2px,
+    rgba(139, 69, 19, 0.1) 4px
+  );
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.social-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  transition: all 0.4s ease;
+  filter: 
+    brightness(0.8) 
+    contrast(1.1) 
+    drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* Effets de hover spécifiques à chaque réseau */
+.social-logo-btn:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.8),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.social-logo-btn:hover::before {
+  opacity: 0.6;
+}
+
+.social-logo-btn:hover .social-logo {
+  filter: 
+    brightness(1.2) 
+    contrast(1.2) 
+    drop-shadow(0 0 15px currentColor);
+}
+
+/* Couleurs spécifiques au hover */
+.social-logo-btn.topserveur:hover {
+  border-color: #DAA520;
+  box-shadow: 
+    0 8px 25px rgba(218, 165, 32, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.social-logo-btn.topserveur:hover .social-logo {
+  filter: 
+    brightness(1.2) 
+    contrast(1.2) 
+    drop-shadow(0 0 15px #DAA520);
+}
+
+.social-logo-btn.discord:hover {
+  border-color: #5865F2;
+  box-shadow: 
+    0 8px 25px rgba(88, 101, 242, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.social-logo-btn.discord:hover .social-logo {
+  filter: 
+    brightness(1.2) 
+    contrast(1.2) 
+    drop-shadow(0 0 15px #5865F2);
+}
+
+.social-logo-btn.tiktok:hover {
+  border-color: #ff0050;
+  box-shadow: 
+    0 8px 25px rgba(255, 0, 80, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.social-logo-btn.tiktok:hover .social-logo {
+  filter: 
+    brightness(1.2) 
+    contrast(1.2) 
+    drop-shadow(0 0 15px #ff0050);
+}
+
+/* Animation de pulsation subtile */
+.social-logo-btn {
+  animation: subtlePulse 4s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { 
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 4px 20px rgba(139, 69, 19, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Effet de clic */
+.social-logo-btn:active {
+  transform: translateY(-3px) scale(1.05);
+  transition: transform 0.1s ease;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+  .social-logo-btn {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .social-buttons {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-buttons {
+    flex-direction: row;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 15px;
+  }
+  
+  .social-logo-btn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .social-logo {
+    padding: 6px;
+  }
+}
+</style>
 
   <h1>CATALOGUE DAY OF DECAY</h1>
   
@@ -674,5 +850,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
