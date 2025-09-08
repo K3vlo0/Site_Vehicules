@@ -190,19 +190,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Navigation suivant
+  // Navigation suivant avec boucle dans la catégorie
   function nextCard() {
-    if (filteredCards.length > 0) {
-      current = (current + 1) % filteredCards.length;
-      updateCarousel();
+    if (filteredCards.length === 0) return;
+    
+    // Aller à la carte suivante, ou revenir à la première si on est à la fin
+    current = (current + 1) % filteredCards.length;
+    updateCarousel();
+    
+    // Message de debug optionnel (peut être supprimé)
+    if (current === 0 && filteredCards.length > 1) {
+      console.log('Retour à la première carte de la catégorie');
     }
   }
 
-  // Navigation précédent
+  // Navigation précédent avec boucle dans la catégorie
   function prevCard() {
-    if (filteredCards.length > 0) {
-      current = (current - 1 + filteredCards.length) % filteredCards.length;
-      updateCarousel();
+    if (filteredCards.length === 0) return;
+    
+    // Aller à la carte précédente, ou aller à la dernière si on est à la première
+    current = (current - 1 + filteredCards.length) % filteredCards.length;
+    updateCarousel();
+    
+    // Message de debug optionnel (peut être supprimé)
+    if (current === filteredCards.length - 1 && filteredCards.length > 1) {
+      console.log('Retour à la dernière carte de la catégorie');
     }
   }
 
@@ -227,6 +239,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const category = btn.getAttribute('data-category');
       currentCategory = category;
+      
+      // Réinitialiser la position à la première carte lors du changement de catégorie
+      current = 0;
       filterCardsByCatalogType();
     });
   });
