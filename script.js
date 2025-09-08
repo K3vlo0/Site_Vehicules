@@ -33,10 +33,12 @@ function createSmoke() {
 // Simulation du compteur de survivants
 function updateSurvivorCount() {
   const counter = document.getElementById('survivorCount');
-  const baseCount = 42;
-  const variation = Math.floor(Math.random() * 10) - 5;
-  const count = Math.max(1, baseCount + variation);
-  counter.textContent = count;
+  if (counter) {
+    const baseCount = 42;
+    const variation = Math.floor(Math.random() * 10) - 5;
+    const count = Math.max(1, baseCount + variation);
+    counter.textContent = count;
+  }
 }
 
 // Attendre le chargement complet du DOM
@@ -53,6 +55,35 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCategory = 'all';
   let currentCatalogType = 'all';
   let filteredCards = [...cards];
+
+  // Nettoyer les cartes invalides ou vides
+  function cleanupInvalidCards() {
+    cards.forEach(card => {
+      const h2 = card.querySelector('h2');
+      const img = card.querySelector('img');
+      
+      // Supprimer les cartes sans nom ou avec des noms invalides
+      if (!h2 || !h2.textContent.trim() || h2.textContent.trim().length < 2) {
+        card.remove();
+        return;
+      }
+      
+      // Supprimer les cartes sans image valide
+      if (!img || !img.src || img.src.includes('undefined')) {
+        card.remove();
+        return;
+      }
+      
+      // Vérifier que la carte a les attributs nécessaires
+      if (!card.getAttribute('data-category') || !card.getAttribute('data-type')) {
+        card.remove();
+        return;
+      }
+    });
+    
+    // Mettre à jour la liste des cartes après nettoyage
+    filteredCards = [...document.querySelectorAll(".vehicle-card")];
+  }
 
   // Afficher le menu principal, cacher le catalogue
   function showMainMenu() {
@@ -83,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
       mainMenu.style.display = 'none';
       vehicleCatalog.style.display = 'block';
       
-      // Afficher l'aide à la navigation
-      if (navigationHelp) {
+      // Afficher l'aide à la navigation seulement sur desktop
+      if (navigationHelp && window.innerWidth > 768) {
         navigationHelp.style.display = 'block';
       }
       
@@ -96,25 +127,26 @@ document.addEventListener('DOMContentLoaded', function() {
     currentCatalogType = catalogType;
     currentCategory = 'all';
     categoryBtns.forEach(btn => btn.classList.remove('active'));
-    categoryBtns[0].classList.add('active');
+    if (categoryBtns[0]) categoryBtns[0].classList.add('active');
     
     filterCardsByCatalogType();
   }
 
   // Filtrer les cartes par type de catalogue (lore-friendly ou import)
   function filterCardsByCatalogType() {
+    const allCards = document.querySelectorAll(".vehicle-card");
     let availableCards;
     
     if (currentCatalogType === 'lore-friendly') {
-      availableCards = [...cards].filter(card => 
+      availableCards = [...allCards].filter(card => 
         card.getAttribute('data-type') === 'lore-friendly'
       );
     } else if (currentCatalogType === 'import') {
-      availableCards = [...cards].filter(card => 
+      availableCards = [...allCards].filter(card => 
         card.getAttribute('data-type') === 'import'
       );
     } else {
-      availableCards = [...cards];
+      availableCards = [...allCards];
     }
 
     // Ensuite filtrer par catégorie
@@ -133,7 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mettre à jour l'affichage du carousel
   function updateCarousel() {
     // Cacher toutes les cartes d'abord
-    cards.forEach(card => {
+    const allCards = document.querySelectorAll(".vehicle-card");
+    allCards.forEach(card => {
       card.classList.remove("active", "prev", "next", "far-prev", "far-next");
     });
     
@@ -213,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Navigation au clavier améliorée
   document.addEventListener("keydown", (e) => {
     // Seulement si le catalogue est visible
-    if (vehicleCatalog.style.display === 'none') return;
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     if (filteredCards.length === 0) return;
     
     switch(e.key) {
@@ -237,14 +270,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Clic sur une carte pour la sélectionner
-  cards.forEach((card) => {
-    card.addEventListener("click", () => {
+  document.addEventListener("click", (e) => {
+    const card = e.target.closest('.vehicle-card');
+    if (card) {
       const filteredIndex = filteredCards.indexOf(card);
       if (filteredIndex !== -1) {
         current = filteredIndex;
         updateCarousel();
       }
-    });
+    }
   });
 
   // Support tactile pour mobile (swipe)
@@ -252,12 +286,12 @@ document.addEventListener('DOMContentLoaded', function() {
   let endX = 0;
 
   document.addEventListener('touchstart', (e) => {
-    if (vehicleCatalog.style.display === 'none') return;
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     startX = e.touches[0].clientX;
   });
 
   document.addEventListener('touchend', (e) => {
-    if (vehicleCatalog.style.display === 'none') return;
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     endX = e.changedTouches[0].clientX;
     handleSwipe();
   });
@@ -279,6 +313,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialisation de l'application
   function initializeApp() {
+    // Nettoyer les cartes invalides d'abord
+    cleanupInvalidCards();
+    
     mainMenu.style.display = 'flex';
     vehicleCatalog.style.display = 'none';
     mainMenu.classList.remove('hidden');
