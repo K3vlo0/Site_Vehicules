@@ -5,6 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catalogue véhicules - Serveur Post-Apo</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Particules animées */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(139, 69, 19, 0.3);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.8;
+      }
+      95% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-200px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Fumée radioactive */
+    .smoke {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .smoke-particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.05) 50%, transparent 100%);
+      border-radius: 50%;
+      animation: smokeFloat 25s infinite linear;
+    }
+
+    @keyframes smokeFloat {
+      0% {
+        transform: translateY(100vh) translateX(-50px) scale(0.5);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.4;
+      }
+      85% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-300px) translateX(50px) scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Compteur de survivants */
+    .survivor-counter {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(40, 20, 10, 0.9));
+      border: 2px solid #8B4513;
+      border-radius: 10px;
+      padding: 15px 20px;
+      font-family: 'Metal Mania', cursive;
+      color: #CD853F;
+      font-size: 1.1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      z-index: 100;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      }
+      50% { 
+        box-shadow: 0 4px 20px rgba(139, 69, 19, 0.5);
+      }
+    }
+
+    .survivor-counter .number {
+      color: #ff6b35;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
+    }
+
+    /* Logo avec effet de surbrillance */
+    h1 {
+      margin: 20px;
+      z-index: 10;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-container {
+      background-image: url('images/day-of-decay-logo.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 600px;
+      height: 200px;
+      filter: 
+        drop-shadow(0 0 8px rgba(139, 69, 19, 0.8))
+        drop-shadow(0 0 15px rgba(210, 105, 30, 0.6))
+        drop-shadow(0 0 25px rgba(222, 184, 135, 0.4))
+        drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+      animation: logoGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      from {
+        filter: 
+          drop-shadow(0 0 8px rgba(139, 69, 19, 0.8))
+          drop-shadow(0 0 15px rgba(210, 105, 30, 0.6))
+          drop-shadow(0 0 25px rgba(222, 184, 135, 0.4))
+          drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+      }
+      to {
+        filter: 
+          drop-shadow(0 0 15px rgba(139, 69, 19, 1))
+          drop-shadow(0 0 25px rgba(210, 105, 30, 0.8))
+          drop-shadow(0 0 35px rgba(222, 184, 135, 0.6))
+          drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.9));
+      }
+    }
+
+    /* Responsive pour le logo */
+    @media (max-width: 768px) {
+      .logo-container {
+        width: 400px;
+        height: 133px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-container {
+        width: 300px;
+        height: 100px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Particules de poussière -->
@@ -216,7 +379,9 @@
 }
 </style>
 
-  <h1>CATALOGUE DAY OF DECAY</h1>
+  <h1>
+    <div class="logo-container"></div>
+  </h1>
   
   <!-- Menu principal - Choix du type de catalogue -->
   <div id="main-menu" class="main-menu">
@@ -261,284 +426,6 @@
         <img src="images/patriot3.png" alt="Pick-up blindé">
         <h2>Patriot3</h2>
         <div class="vehicle-category">Pick-up Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 400kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/draugur.png" alt="Pick-up blindé">
-        <h2>Draugur</h2>
-        <div class="vehicle-category">Pick-up</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 250kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/dominator4.png" alt="machine apo">
-        <h2>Dominator4</h2>
-        <div class="vehicle-category">Pick-up Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 150kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/bruiser.png" alt="4x4 de combat">
-        <h2>Bruiser</h2>
-        <div class="vehicle-category">4x4 Combat</div>
-        <ul>
-          <li>💰 Prix : 50 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 300kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/dubsta3.png" alt="Pick-up blindé">
-        <h2>Dubsta3</h2>
-        <div class="vehicle-category">Pick-up Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 200kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/guardian.png" alt="Pick-up blindé">
-        <h2>Guardian</h2>
-        <div class="vehicle-category">Pick-up Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 6</li>
-          <li>📦 Coffre : 250kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/ratel.png" alt="Top dans les dunes">
-        <h2>Ratel</h2>
-        <div class="vehicle-category">Tout terrain</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 80kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/squaddie.png" alt="Pick-up blindé">
-        <h2>Squaddie</h2>
-        <div class="vehicle-category">Pick-up de l'armée</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 6</li>
-          <li>📦 Coffre : 250kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/terminus.png" alt="Pick-up blindé">
-        <h2>Terminus</h2>
-        <div class="vehicle-category">SUV Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 280kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="camions" data-type="vanilla">
-        <img src="images/vetir.png" alt="Camion blindé">
-        <h2>Vetir</h2>
-        <div class="vehicle-category">Camion Blindé</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 10</li>
-          <li>📦 Coffre : 200kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/brutus.png" alt="Véhicule de guerre">
-        <h2>Brutus</h2>
-        <div class="vehicle-category">War Machine</div>
-        <ul>
-          <li>💰 Prix : 75 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 200kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="motos" data-type="vanilla">
-        <img src="images/cliffhanger.png" alt="Buggy de falaise">
-        <h2>Cliffhanger</h2>
-        <div class="vehicle-category">Buggy</div>
-        <ul>
-          <li>💰 Prix : 40 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 100kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/comet-safari.png" alt="Coupé rallye">
-        <h2>Comet Safari</h2>
-        <div class="vehicle-category">Rallye</div>
-        <ul>
-          <li>💰 Prix : 55 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 150kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/kamacho.png" alt="Pick-up tout-terrain">
-        <h2>Kamacho</h2>
-        <div class="vehicle-category">Pick-up TT</div>
-        <ul>
-          <li>💰 Prix : 48 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 350kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="suv" data-type="vanilla">
-        <img src="images/riata.png" alt="Pick-up aventure">
-        <h2>Riata</h2>
-        <div class="vehicle-category">Pick-up</div>
-        <ul>
-          <li>💰 Prix : 42 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 4</li>
-          <li>📦 Coffre : 320kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/trophy-truck.png" alt="Truck de course">
-        <h2>Trophy Truck</h2>
-        <div class="vehicle-category">Racing Truck</div>
-        <ul>
-          <li>💰 Prix : 65 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 250kg</li>
-        </ul>
-      </div>
-
-      <!-- Motos Vanilla -->
-      <div class="vehicle-card" data-category="motos" data-type="vanilla">
-        <img src="images/bf400.png" alt="Moto tout-terrain">
-        <h2>BF400</h2>
-        <div class="vehicle-category">Moto</div>
-        <ul>
-          <li>💰 Prix : 30 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 0kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="motos" data-type="vanilla">
-        <img src="images/deathbike.png" alt="Moto de la mort">
-        <h2>Deathbike</h2>
-        <div class="vehicle-category">Moto</div>
-        <ul>
-          <li>💰 Prix : 45 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 1</li>
-          <li>📦 Coffre : 0kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="motos" data-type="vanilla">
-        <img src="images/gargoyle.png" alt="Chopper gargoyle">
-        <h2>Gargoyle</h2>
-        <div class="vehicle-category">Moto</div>
-        <ul>
-          <li>💰 Prix : 40 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 0kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="motos" data-type="vanilla">
-        <img src="images/sanctus.png" alt="Moto sanctus">
-        <h2>Sanctus</h2>
-        <div class="vehicle-category">Moto</div>
-        <ul>
-          <li>💰 Prix : 38 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 0kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/sasquatch.png" alt="Moto sasquatch">
-        <h2>Sasquatch</h2>
-        <div class="vehicle-category">Moto</div>
-        <ul>
-          <li>💰 Prix : 42 EURO</li>
-          <li>⛽ Carburant : Diesel</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 0kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/barrage.png" alt="Parfait pour assurer les convois">
-        <h2>Barrage2</h2>
-        <div class="vehicle-category">Camion</div>
-        <ul>
-          <li>💰 Prix : 30 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 2</li>
-          <li>📦 Coffre : 250kg</li>
-        </ul>
-      </div>
-
-      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
-        <img src="images/blazer6.png" alt="Quad Apocalyptic">
-        <h2>Blazer6</h2>
-        <div class="vehicle-category">Quad</div>
-        <ul>
-          <li>💰 Prix : 30 EURO</li>
-          <li>⛽ Carburant : Essence</li>
-          <li>👥 Places : 1</li>
-          <li>📦 Coffre : 50kg</li>
-        </ul>
-      </div>
-
-      <!-- Véhicules Import -->
-      <div class="vehicle-card" data-category="tout-terrain" data-type="import">
-        <img src="images/apocalyptic.png" alt="Roi du franchissement">
-        <h2>Apocalyptic</h2>
-        <div class="vehicle-category">SUV</div>
         <ul>
           <li>💰 Prix : 30 EURO</li>
           <li>⛽ Carburant : Diesel</li>
@@ -847,9 +734,337 @@
     </div>
   </div>
 
+  <script>
+    // Animation des particules de poussière
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.width = Math.random() * 4 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Animation de la fumée radioactive
+    function createSmoke() {
+      const smokeContainer = document.getElementById('smoke');
+      
+      for (let i = 0; i < 20; i++) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke-particle';
+        smoke.style.left = Math.random() * 100 + '%';
+        smoke.style.width = Math.random() * 80 + 40 + 'px';
+        smoke.style.height = smoke.style.width;
+        smoke.style.animationDelay = Math.random() * 25 + 's';
+        smoke.style.animationDuration = (Math.random() * 20 + 25) + 's';
+        smokeContainer.appendChild(smoke);
+      }
+    }
+
+    // Simulation du compteur de survivants
+    function updateSurvivorCount() {
+      const counter = document.getElementById('survivorCount');
+      const baseCount = 42;
+      const variation = Math.floor(Math.random() * 10) - 5;
+      const count = Math.max(1, baseCount + variation);
+      counter.textContent = count;
+    }
+
+    // Ajouter le JavaScript du site existant
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialiser les animations
+      createParticles();
+      createSmoke();
+      updateSurvivorCount();
+      
+      // Mettre à jour le compteur toutes les 30 secondes
+      setInterval(updateSurvivorCount, 30000);
+    });
+  </script>
   <script src="script.js"></script>
 </body>
-</html>
+</html>>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 400kg</li>
+        </ul>
+      </div>
 
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/draugur.png" alt="Pick-up blindé">
+        <h2>Draugur</h2>
+        <div class="vehicle-category">Pick-up</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
 
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/dominator4.png" alt="machine apo">
+        <h2>Dominator4</h2>
+        <div class="vehicle-category">Pick-up Blindé</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 150kg</li>
+        </ul>
+      </div>
 
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/bruiser.png" alt="4x4 de combat">
+        <h2>Bruiser</h2>
+        <div class="vehicle-category">4x4 Combat</div>
+        <ul>
+          <li>💰 Prix : 50 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 300kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/dubsta3.png" alt="Pick-up blindé">
+        <h2>Dubsta3</h2>
+        <div class="vehicle-category">Pick-up Blindé</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 200kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/guardian.png" alt="Pick-up blindé">
+        <h2>Guardian</h2>
+        <div class="vehicle-category">Pick-up Blindé</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 6</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/ratel.png" alt="Top dans les dunes">
+        <h2>Ratel</h2>
+        <div class="vehicle-category">Tout terrain</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 80kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/squaddie.png" alt="Pick-up blindé">
+        <h2>Squaddie</h2>
+        <div class="vehicle-category">Pick-up de l'armée</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 6</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/terminus.png" alt="Pick-up blindé">
+        <h2>Terminus</h2>
+        <div class="vehicle-category">SUV Blindé</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 280kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="camions" data-type="vanilla">
+        <img src="images/vetir.png" alt="Camion blindé">
+        <h2>Vetir</h2>
+        <div class="vehicle-category">Camion Blindé</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 10</li>
+          <li>📦 Coffre : 200kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/brutus.png" alt="Véhicule de guerre">
+        <h2>Brutus</h2>
+        <div class="vehicle-category">War Machine</div>
+        <ul>
+          <li>💰 Prix : 75 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 200kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="motos" data-type="vanilla">
+        <img src="images/cliffhanger.png" alt="Buggy de falaise">
+        <h2>Cliffhanger</h2>
+        <div class="vehicle-category">Buggy</div>
+        <ul>
+          <li>💰 Prix : 40 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 100kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/comet-safari.png" alt="Coupé rallye">
+        <h2>Comet Safari</h2>
+        <div class="vehicle-category">Rallye</div>
+        <ul>
+          <li>💰 Prix : 55 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 150kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/kamacho.png" alt="Pick-up tout-terrain">
+        <h2>Kamacho</h2>
+        <div class="vehicle-category">Pick-up TT</div>
+        <ul>
+          <li>💰 Prix : 48 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 350kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="vanilla">
+        <img src="images/riata.png" alt="Pick-up aventure">
+        <h2>Riata</h2>
+        <div class="vehicle-category">Pick-up</div>
+        <ul>
+          <li>💰 Prix : 42 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 320kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/trophy-truck.png" alt="Truck de course">
+        <h2>Trophy Truck</h2>
+        <div class="vehicle-category">Racing Truck</div>
+        <ul>
+          <li>💰 Prix : 65 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <!-- Motos Vanilla -->
+      <div class="vehicle-card" data-category="motos" data-type="vanilla">
+        <img src="images/bf400.png" alt="Moto tout-terrain">
+        <h2>BF400</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="motos" data-type="vanilla">
+        <img src="images/deathbike.png" alt="Moto de la mort">
+        <h2>Deathbike</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 45 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 1</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="motos" data-type="vanilla">
+        <img src="images/gargoyle.png" alt="Chopper gargoyle">
+        <h2>Gargoyle</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 40 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="motos" data-type="vanilla">
+        <img src="images/sanctus.png" alt="Moto sanctus">
+        <h2>Sanctus</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 38 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/sasquatch.png" alt="Moto sasquatch">
+        <h2>Sasquatch</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 42 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/barrage.png" alt="Parfait pour assurer les convois">
+        <h2>Barrage2</h2>
+        <div class="vehicle-category">Camion</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="tout-terrain" data-type="vanilla">
+        <img src="images/blazer6.png" alt="Quad Apocalyptic">
+        <h2>Blazer6</h2>
+        <div class="vehicle-category">Quad</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 1</li>
+          <li>📦 Coffre : 50kg</li>
+        </ul>
+      </div>
+
+      <!-- Véhicules Import -->
+      <div class="vehicle-card" data-category="tout-terrain" data-type="import">
+        <img src="images/apocalyptic.png" alt="Roi du franchissement">
+        <h2>Apocalyptic</h2>
+        <div class="vehicle-category">SUV</div>
+        <ul>
+          <li
