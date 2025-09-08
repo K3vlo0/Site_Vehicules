@@ -752,3 +752,60 @@ h1 {
     height: 150px;
   }
 }
+/* Ajoutez ceci à la fin de votre CSS existant */
+
+/* Supprimer tout contenu indésirable en bas de page */
+body::after {
+  display: none !important;
+}
+
+/* S'assurer qu'aucun texte ne déborde en bas */
+.container::after,
+.controls::after {
+  display: none !important;
+}
+
+/* Cacher tout élément avec du contenu de débogage */
+*[data-debug],
+.debug-info,
+.vehicle-info,
+*:contains("010"),
+*:contains("Prix : 35 EURO") {
+  display: none !important;
+}
+
+/* Empêcher l'affichage de contenu après les contrôles */
+.controls ~ * {
+  display: none !important;
+}
+
+/* Exception pour le script */
+.controls ~ script {
+  display: block !important;
+}
+
+/* S'assurer que seuls les éléments du DOM principal sont visibles */
+body > *:not(#main-menu):not(#vehicle-catalog):not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(script) {
+  display: none !important;
+}
+
+/* Nettoyer les pseudo-éléments indésirables */
+.vehicle-card::after,
+.container::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Empêcher l'affichage de texte libre dans le body */
+body {
+  overflow-x: hidden;
+}
+
+body > text,
+body > textNode {
+  display: none !important;
+}
+
+
+
+
