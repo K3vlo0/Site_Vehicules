@@ -210,14 +210,14 @@ document.addEventListener('DOMContentLoaded', function() {
     filterCardsByCatalogType();
   }
 
-  // Filtrer les cartes par type de catalogue (lore-friendly ou import)
+  // Filtrer les cartes par type de catalogue (Vanilla ou import)
   function filterCardsByCatalogType() {
     const allCards = document.querySelectorAll(".vehicle-card");
     let availableCards;
     
-    if (currentCatalogType === 'lore-friendly') {
+    if (currentCatalogType === 'Vanilla') {
       availableCards = [...allCards].filter(card => 
-        card.getAttribute('data-type') === 'lore-friendly'
+        card.getAttribute('data-type') === 'Vanilla'
       );
     } else if (currentCatalogType === 'import') {
       availableCards = [...allCards].filter(card => 
@@ -419,3 +419,4 @@ document.addEventListener('DOMContentLoaded', function() {
   
   initializeApp();
 });
+
