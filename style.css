@@ -1,5 +1,223 @@
 @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Nosifer&family=Butcherman&family=Pirata+One&family=Jolly+Lodger&family=Rye&display=swap');
 
+/* Particules animées */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(139, 69, 19, 0.3);
+  border-radius: 50%;
+  animation: float 20s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Fumée radioactive */
+.smoke {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.smoke-particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.05) 50%, transparent 100%);
+  border-radius: 50%;
+  animation: smokeFloat 25s infinite linear;
+}
+
+@keyframes smokeFloat {
+  0% {
+    transform: translateY(100vh) translateX(-50px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-200px) translateX(50px) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Compteur de survivants */
+.survivor-counter {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(40, 20, 10, 0.9));
+  border: 2px solid #8B4513;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-family: 'Metal Mania', cursive;
+  color: #CD853F;
+  font-size: 1.1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  }
+  50% { 
+    box-shadow: 0 4px 20px rgba(139, 69, 19, 0.5);
+  }
+}
+
+.survivor-counter .number {
+  color: #ff6b35;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
+}
+
+/* Aide à la navigation */
+.navigation-help {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(40, 20, 10, 0.9));
+  border: 2px solid #8B4513;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-family: 'Metal Mania', cursive;
+  color: #CD853F;
+  font-size: 0.8rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.navigation-help:hover {
+  opacity: 1;
+}
+
+.navigation-help .key {
+  background: #444;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 0 2px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Boutons sociaux style post-apo */
+.social-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 100;
+}
+
+.social-btn {
+  background: linear-gradient(145deg, rgba(40, 40, 40, 0.95), rgba(20, 20, 20, 0.9));
+  border: 2px solid #666;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: 'Metal Mania', cursive;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(139, 69, 19, 0.1) 2px,
+    rgba(139, 69, 19, 0.1) 4px
+  );
+  pointer-events: none;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  border-color: #8B4513;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px rgba(139, 69, 19, 0.4);
+  text-shadow: 0 0 10px rgba(205, 133, 63, 0.8);
+}
+
+.social-btn.discord:hover {
+  color: #7289da;
+  border-color: #7289da;
+}
+
+.social-btn.tiktok:hover {
+  color: #ff0050;
+  border-color: #ff0050;
+}
+
+.social-btn.topserveur:hover {
+  color: #ffd700;
+  border-color: #ffd700;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+}
+
 body {
   font-family: 'Rye', cursive;
   background: #111;
@@ -17,14 +235,12 @@ body {
   min-height: 100vh;
 }
 
-/* Alternative background pour écrans larges - évite les bandes noires */
 @media (min-aspect-ratio: 16/9) {
   body {
-    background-size: 100% 100%; /* Force l'image à remplir tout l'écran */
+    background-size: 100% 100%;
   }
 }
 
-/* Fix pour mobile où background-attachment: fixed ne fonctionne pas */
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
@@ -32,7 +248,6 @@ body {
     min-height: 100vh;
   }
   
-  /* Backup background pour mobile */
   body::after {
     content: '';
     position: fixed;
@@ -46,7 +261,6 @@ body {
   }
 }
 
-/* Overlay sombre pour améliorer la lisibilité */
 body::before {
   content: '';
   position: fixed;
@@ -74,6 +288,8 @@ h1 {
   font-weight: bold;
   letter-spacing: 2px;
   animation: rustGlow 4s ease-in-out infinite alternate;
+  z-index: 10;
+  position: relative;
 }
 
 @keyframes rustGlow {
@@ -85,7 +301,6 @@ h1 {
   }
 }
 
-/* Menu principal - Choix du type de catalogue */
 .main-menu {
   display: flex;
   justify-content: center;
@@ -95,6 +310,8 @@ h1 {
   opacity: 1;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   transform: translateY(0);
+  z-index: 10;
+  position: relative;
 }
 
 .main-menu.hidden {
@@ -102,11 +319,12 @@ h1 {
   transform: translateY(-20px);
 }
 
-/* Catalogue des véhicules */
 #vehicle-catalog {
   opacity: 1;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   transform: translateY(0);
+  z-index: 10;
+  position: relative;
 }
 
 #vehicle-catalog.hidden {
@@ -174,7 +392,6 @@ h1 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Bouton retour */
 .back-button-container {
   text-align: left;
   padding: 20px;
@@ -199,7 +416,6 @@ h1 {
   box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
 }
 
-/* Navigation des catégories */
 .category-nav {
   display: flex;
   justify-content: center;
@@ -266,8 +482,6 @@ h1 {
   box-sizing: border-box;
   position: absolute;
   backdrop-filter: blur(10px);
-  
-  /* Par défaut : invisible et décalé */
   opacity: 0;
   transform: translateX(0) scale(0.8);
   filter: blur(3px);
@@ -275,7 +489,6 @@ h1 {
   pointer-events: none;
 }
 
-/* Carte active (centre) */
 .vehicle-card.active {
   opacity: 1;
   transform: translateX(0) scale(1);
@@ -286,7 +499,6 @@ h1 {
   pointer-events: auto;
 }
 
-/* Carte à droite de l'active */
 .vehicle-card.next {
   opacity: 0.6;
   transform: translateX(330px) scale(0.85);
@@ -295,7 +507,6 @@ h1 {
   pointer-events: auto;
 }
 
-/* Carte à gauche de l'active */
 .vehicle-card.prev {
   opacity: 0.6;
   transform: translateX(-330px) scale(0.85);
@@ -304,7 +515,6 @@ h1 {
   pointer-events: auto;
 }
 
-/* Cartes encore plus éloignées */
 .vehicle-card.far-next {
   opacity: 0.3;
   transform: translateX(660px) scale(0.7);
@@ -321,7 +531,6 @@ h1 {
   pointer-events: auto;
 }
 
-/* Animation au survol */
 .vehicle-card:hover:not(.active) {
   filter: blur(0.5px) !important;
   opacity: 0.9 !important;
@@ -338,48 +547,48 @@ h1 {
 }
 
 .controls button {
-  background: none;
-  border: none;
+  background: linear-gradient(145deg, rgba(40, 40, 40, 0.95), rgba(20, 20, 20, 0.9));
+  border: 2px solid #666;
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0;
+  padding: 20px;
   width: 80px;
   height: 80px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
-  font-size: 0;
-  color: transparent;
-  text-indent: -9999px;
-  overflow: hidden;
+  color: #CD853F;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Metal Mania', cursive;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .controls button:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 6px 12px rgba(255, 71, 71, 0.4)) brightness(1.1);
+  border-color: #8B4513;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px rgba(139, 69, 19, 0.4);
+  text-shadow: 0 0 10px rgba(205, 133, 63, 0.8);
+  color: #DAA520;
 }
 
 .controls button:active {
   transform: scale(0.95);
 }
 
-/* Bouton précédent - main gauche */
-#prev {
-  background-image: url('./images/hand-left.png') !important;
-  background-color: transparent !important;
+#prev::before {
+  content: "‹";
 }
 
-/* Bouton suivant - main droite */
-#next {
-  background-image: url('./images/hand-right.png') !important;
-  background-color: transparent !important;
-}
-
-/* Supprime complètement les emojis fallback */
-#prev::before,
 #next::before {
-  display: none !important;
+  content: "›";
 }
 
 .vehicle-card img {
@@ -414,7 +623,6 @@ h1 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-/* Badge de catégorie sur les cartes */
 .vehicle-category {
   position: absolute;
   top: 15px;
@@ -432,8 +640,30 @@ h1 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Responsive Menu principal */
+/* Responsive */
 @media (max-width: 768px) {
+  .survivor-counter {
+    top: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .navigation-help {
+    display: none !important;
+  }
+  
+  .social-buttons {
+    bottom: 10px;
+    left: 10px;
+    gap: 10px;
+  }
+  
+  .social-btn {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+  }
+  
   .category-choice-container {
     flex-direction: column;
     gap: 40px;
@@ -457,180 +687,41 @@ h1 {
   .category-choice h2 {
     font-size: 1.5rem;
   }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .vehicle-card {
-    width: 280px;
-    min-width: 280px;
-    margin: 0 10px;
-  }
-  
-  .vehicle-card.next {
-    transform: translateX(300px) scale(0.85);
-  }
-  
-  .vehicle-card.prev {
-    transform: translateX(-300px) scale(0.85);
-  }
-  
-  .vehicle-card.far-next {
-    transform: translateX(600px) scale(0.7);
-  }
-  
-  .vehicle-card.far-prev {
-    transform: translateX(-600px) scale(0.7);
-  }
-}
-
-@media (max-width: 900px) {
-  .vehicle-card {
-    width: 260px;
-    min-width: 260px;
-    padding: 15px;
-  }
-  
-  .vehicle-card.next {
-    transform: translateX(280px) scale(0.85);
-  }
-  
-  .vehicle-card.prev {
-    transform: translateX(-280px) scale(0.85);
-  }
-  
-  /* Cache les cartes far sur mobile */
-  .vehicle-card.far-next,
-  .vehicle-card.far-prev {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: 1.6rem;
-    margin: 15px 10px;
-  }
-  
-  .container {
-    height: 70vh;
-    padding: 0 10px;
-  }
-  
-  .vehicle-card {
-    width: 240px;
-    min-width: 240px;
-    padding: 15px;
-  }
-  
-  .vehicle-card.next {
-    transform: translateX(270px) scale(0.8);
-    opacity: 0.4;
-  }
-  
-  .vehicle-card.prev {
-    transform: translateX(-270px) scale(0.8);
-    opacity: 0.4;
-  }
-  
-  .vehicle-card img {
-    height: 150px;
-  }
-  
-  .controls {
-    gap: 30px;
-  }
   
   .controls button {
     width: 60px;
     height: 60px;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .category-choice-container {
-    flex-direction: column;
-    gap: 20px;
-    padding: 0 10px;
+  .social-buttons {
+    flex-direction: row;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
-  .category-choice {
-    width: 100%;
-    max-width: 300px;
-    padding: 20px 15px;
-    margin: 0 auto;
+  .social-btn {
+    padding: 6px 10px;
+    font-size: 0.7rem;
   }
   
-  .category-icon {
-    width: 80px;
-    height: 80px;
-  }
-  
-  .category-icon img {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .category-choice h2 {
-    font-size: 1.3rem;
-  }
-  
-  .category-choice p {
-    font-size: 0.9rem;
-  }
-  
-  .container {
-    height: 75vh;
-    padding: 0 5px;
-  }
-  
-  .vehicle-card {
-    width: 220px;
-    min-width: 220px;
-    padding: 12px;
-  }
-  
-  .vehicle-card.next {
-    transform: translateX(250px) scale(0.75);
-    opacity: 0.3;
-  }
-  
-  .vehicle-card.prev {
-    transform: translateX(-250px) scale(0.75);
-    opacity: 0.3;
-  }
-  
-  .vehicle-card img {
-    height: 130px;
-  }
-  
-  .vehicle-card h2 {
-    font-size: 1.1rem;
-  }
-  
-  .vehicle-card li {
-    font-size: 0.8rem;
-  }
-  
-  .controls {
-    gap: 20px;
+  .social-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
   }
   
   .controls button {
     width: 50px;
     height: 50px;
+    font-size: 1rem;
+    gap: 20px;
   }
   
-  .category-nav {
-    gap: 8px;
-    margin: 15px 0;
-    padding: 0 10px;
-  }
-  
-  .category-btn {
-    padding: 8px 16px;
-    font-size: 0.85rem;
+  .controls {
+    gap: 30px;
   }
 }
-
