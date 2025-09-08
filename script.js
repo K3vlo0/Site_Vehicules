@@ -14,15 +14,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Show main menu, hide catalog
   function showMainMenu() {
-    mainMenu.style.display = 'flex';
-    vehicleCatalog.style.display = 'none';
+    // Fade out catalog first
+    vehicleCatalog.classList.add('hidden');
+    
+    setTimeout(() => {
+      vehicleCatalog.style.display = 'none';
+      mainMenu.style.display = 'flex';
+      
+      // Fade in main menu
+      setTimeout(() => {
+        mainMenu.classList.remove('hidden');
+      }, 50);
+    }, 500);
+    
     currentCatalogType = 'all';
   }
 
   // Show catalog, hide main menu
   function showCatalog(catalogType) {
-    mainMenu.style.display = 'none';
-    vehicleCatalog.style.display = 'block';
+    // Fade out main menu first
+    mainMenu.classList.add('hidden');
+    
+    setTimeout(() => {
+      mainMenu.style.display = 'none';
+      vehicleCatalog.style.display = 'block';
+      
+      // Fade in catalog
+      setTimeout(() => {
+        vehicleCatalog.classList.remove('hidden');
+      }, 50);
+    }, 500);
+    
     currentCatalogType = catalogType;
     
     // Reset category to "Tous"
@@ -174,5 +196,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Initialize - show main menu
-  showMainMenu();
+  function initializeApp() {
+    mainMenu.style.display = 'flex';
+    vehicleCatalog.style.display = 'none';
+    mainMenu.classList.remove('hidden');
+    vehicleCatalog.classList.add('hidden');
+  }
+  
+  initializeApp();
 });
