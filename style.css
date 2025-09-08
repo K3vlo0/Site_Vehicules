@@ -415,7 +415,7 @@ h1 {
   background: rgba(26, 26, 26, 0.9);
   border: 2px solid #444;
   border-radius: 25px;
-  color: #ddd;
+  color: #ddd !important;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
@@ -429,7 +429,7 @@ h1 {
 .category-btn:hover {
   background: rgba(205, 133, 63, 0.8);
   border-color: #CD853F;
-  color: white;
+  color: white !important;
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(205, 133, 63, 0.4);
 }
@@ -437,7 +437,7 @@ h1 {
 .category-btn.active {
   background: linear-gradient(145deg, #CD853F, #8B4513);
   border-color: #DAA520;
-  color: white;
+  color: white !important;
   box-shadow: 0 6px 20px rgba(205, 133, 63, 0.5);
 }
 
