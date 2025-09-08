@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&family=Nosifer&family=Butcherman&family=Pirata+One&family=Jolly+Lodger&family=Rye&display=swap');
+
 body {
-  font-family: Metal Mania, sans-serif;
+  font-family: 'Rye', cursive;
   background: #111;
-  /* Ajoutez votre image de fond ici : */
-  background-image: url('./images/day-of-decay-background.png');
-  background-size: scale-down;
+  background-image: url('./images/day-of-decay-background.jpg');
+  background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -85,14 +86,14 @@ h1 {
   border-color: #CD853F;
   color: white;
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(205, 133, 63, 0.8);
+  box-shadow: 0 6px 20px rgba(205, 133, 63, 0.4);
 }
 
 .category-btn.active {
   background: linear-gradient(145deg, #CD853F, #8B4513);
-  border-color: #000000;
+  border-color: #DAA520;
   color: white;
-  box-shadow: 0 6px 20px rgba(255, 133, 63, 0.5);
+  box-shadow: 0 6px 20px rgba(205, 133, 63, 0.5);
 }
 
 .container {
@@ -176,11 +177,12 @@ h1 {
   pointer-events: auto;
 }
 
-/* Animation au survol */
+/* Animation au survol - Version douce */
 .vehicle-card:hover:not(.active) {
-  filter: blur(1px) !important;
-  opacity: 0.8 !important;
-  transform: scale(0.9) !important;
+  filter: blur(0.5px) !important;
+  opacity: 0.9 !important;
+  transform: scale(0.95) !important;
+  z-index: 8 !important;
 }
 
 .controls {
@@ -419,5 +421,3 @@ h1 {
     height: 50px;
   }
 }
-
-
