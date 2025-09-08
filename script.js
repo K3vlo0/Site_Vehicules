@@ -1,4 +1,45 @@
-// Wait for DOM to be fully loaded
+// Animation des particules de poussière
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  
+  for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.width = Math.random() * 4 + 2 + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// Animation de la fumée radioactive
+function createSmoke() {
+  const smokeContainer = document.getElementById('smoke');
+  
+  for (let i = 0; i < 20; i++) {
+    const smoke = document.createElement('div');
+    smoke.className = 'smoke-particle';
+    smoke.style.left = Math.random() * 100 + '%';
+    smoke.style.width = Math.random() * 80 + 40 + 'px';
+    smoke.style.height = smoke.style.width;
+    smoke.style.animationDelay = Math.random() * 25 + 's';
+    smoke.style.animationDuration = (Math.random() * 20 + 25) + 's';
+    smokeContainer.appendChild(smoke);
+  }
+}
+
+// Simulation du compteur de survivants
+function updateSurvivorCount() {
+  const counter = document.getElementById('survivorCount');
+  const baseCount = 42;
+  const variation = Math.floor(Math.random() * 10) - 5;
+  const count = Math.max(1, baseCount + variation);
+  counter.textContent = count;
+}
+
+// Attendre le chargement complet du DOM
 document.addEventListener('DOMContentLoaded', function() {
   const cards = document.querySelectorAll(".vehicle-card");
   const categoryBtns = document.querySelectorAll(".category-btn");
@@ -6,22 +47,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const vehicleCatalog = document.getElementById('vehicle-catalog');
   const categoryChoices = document.querySelectorAll('.category-choice');
   const backButton = document.getElementById('back-to-menu');
+  const navigationHelp = document.getElementById('navigationHelp');
   
   let current = 0;
   let currentCategory = 'all';
-  let currentCatalogType = 'all'; // 'lore-friendly' or 'import'
+  let currentCatalogType = 'all';
   let filteredCards = [...cards];
 
-  // Show main menu, hide catalog
+  // Afficher le menu principal, cacher le catalogue
   function showMainMenu() {
-    // Fade out catalog first
     vehicleCatalog.classList.add('hidden');
+    
+    // Cacher l'aide à la navigation
+    if (navigationHelp) {
+      navigationHelp.style.display = 'none';
+    }
     
     setTimeout(() => {
       vehicleCatalog.style.display = 'none';
       mainMenu.style.display = 'flex';
       
-      // Fade in main menu
       setTimeout(() => {
         mainMenu.classList.remove('hidden');
       }, 50);
@@ -30,33 +75,33 @@ document.addEventListener('DOMContentLoaded', function() {
     currentCatalogType = 'all';
   }
 
-  // Show catalog, hide main menu
+  // Afficher le catalogue, cacher le menu principal
   function showCatalog(catalogType) {
-    // Fade out main menu first
     mainMenu.classList.add('hidden');
     
     setTimeout(() => {
       mainMenu.style.display = 'none';
       vehicleCatalog.style.display = 'block';
       
-      // Fade in catalog
+      // Afficher l'aide à la navigation
+      if (navigationHelp) {
+        navigationHelp.style.display = 'block';
+      }
+      
       setTimeout(() => {
         vehicleCatalog.classList.remove('hidden');
       }, 50);
     }, 500);
     
     currentCatalogType = catalogType;
-    
-    // Reset category to "Tous"
     currentCategory = 'all';
     categoryBtns.forEach(btn => btn.classList.remove('active'));
-    categoryBtns[0].classList.add('active'); // Premier bouton "Tous"
+    categoryBtns[0].classList.add('active');
     
-    // Filter and show vehicles
     filterCardsByCatalogType();
   }
 
-  // Filter cards by catalog type (lore-friendly or import)
+  // Filtrer les cartes par type de catalogue (lore-friendly ou import)
   function filterCardsByCatalogType() {
     let availableCards;
     
@@ -72,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
       availableCards = [...cards];
     }
 
-    // Then filter by category
+    // Ensuite filtrer par catégorie
     if (currentCategory === 'all') {
       filteredCards = availableCards;
     } else {
@@ -85,20 +130,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCarousel();
   }
 
-  // Filter cards by category within current catalog type
-  function filterCardsByCategory(category) {
-    currentCategory = category;
-    filterCardsByCatalogType();
-  }
-
-  // Update carousel display
+  // Mettre à jour l'affichage du carousel
   function updateCarousel() {
-    // Hide all cards first
+    // Cacher toutes les cartes d'abord
     cards.forEach(card => {
       card.classList.remove("active", "prev", "next", "far-prev", "far-next");
     });
     
-    // Only work with filtered cards
+    // Travailler uniquement avec les cartes filtrées
     if (filteredCards.length === 0) return;
     
     filteredCards.forEach((card, index) => {
@@ -118,7 +157,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Category choice event listeners (main menu)
+  // Navigation suivant
+  function nextCard() {
+    if (filteredCards.length > 0) {
+      current = (current + 1) % filteredCards.length;
+      updateCarousel();
+    }
+  }
+
+  // Navigation précédent
+  function prevCard() {
+    if (filteredCards.length > 0) {
+      current = (current - 1 + filteredCards.length) % filteredCards.length;
+      updateCarousel();
+    }
+  }
+
+  // Event listeners pour les choix de catalogue (menu principal)
   categoryChoices.forEach(choice => {
     choice.addEventListener('click', () => {
       const catalogType = choice.getAttribute('data-type');
@@ -126,67 +181,64 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Back button event listener
+  // Event listener pour le bouton retour
   if (backButton) {
     backButton.addEventListener('click', showMainMenu);
   }
 
-  // Category navigation (in catalog)
+  // Navigation par catégories (dans le catalogue)
   categoryBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      // Update active category button
       categoryBtns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       
-      // Filter cards
       const category = btn.getAttribute('data-category');
-      filterCardsByCategory(category);
+      currentCategory = category;
+      filterCardsByCatalogType();
     });
   });
 
-  // Carousel navigation - Next button
+  // Bouton suivant du carousel
   const nextBtn = document.getElementById("next");
   if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      if (filteredCards.length > 0) {
-        current = (current + 1) % filteredCards.length;
-        updateCarousel();
-      }
-    });
+    nextBtn.addEventListener("click", nextCard);
   }
 
-  // Carousel navigation - Previous button
+  // Bouton précédent du carousel
   const prevBtn = document.getElementById("prev");
   if (prevBtn) {
-    prevBtn.addEventListener("click", () => {
-      if (filteredCards.length > 0) {
-        current = (current - 1 + filteredCards.length) % filteredCards.length;
-        updateCarousel();
-      }
-    });
+    prevBtn.addEventListener("click", prevCard);
   }
 
-  // Keyboard navigation
+  // Navigation au clavier améliorée
   document.addEventListener("keydown", (e) => {
-    // Only work if catalog is visible
+    // Seulement si le catalogue est visible
     if (vehicleCatalog.style.display === 'none') return;
     if (filteredCards.length === 0) return;
     
-    if (e.key === "ArrowRight") {
-      current = (current + 1) % filteredCards.length;
-      updateCarousel();
-    } else if (e.key === "ArrowLeft") {
-      current = (current - 1 + filteredCards.length) % filteredCards.length;
-      updateCarousel();
-    } else if (e.key === "Escape") {
-      showMainMenu();
+    switch(e.key) {
+      case "ArrowRight":
+        e.preventDefault();
+        nextCard();
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        prevCard();
+        break;
+      case "Escape":
+        e.preventDefault();
+        showMainMenu();
+        break;
+      case " ": // Barre d'espace pour suivant
+        e.preventDefault();
+        nextCard();
+        break;
     }
   });
 
-  // Click on card to select
-  cards.forEach((card, index) => {
+  // Clic sur une carte pour la sélectionner
+  cards.forEach((card) => {
     card.addEventListener("click", () => {
-      // Find index in filtered cards
       const filteredIndex = filteredCards.indexOf(card);
       if (filteredIndex !== -1) {
         current = filteredIndex;
@@ -195,13 +247,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Initialize - show main menu
+  // Support tactile pour mobile (swipe)
+  let startX = 0;
+  let endX = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if (vehicleCatalog.style.display === 'none') return;
+    startX = e.touches[0].clientX;
+  });
+
+  document.addEventListener('touchend', (e) => {
+    if (vehicleCatalog.style.display === 'none') return;
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const diffX = startX - endX;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(diffX) > minSwipeDistance) {
+      if (diffX > 0) {
+        // Swipe vers la gauche = suivant
+        nextCard();
+      } else {
+        // Swipe vers la droite = précédent
+        prevCard();
+      }
+    }
+  }
+
+  // Initialisation de l'application
   function initializeApp() {
     mainMenu.style.display = 'flex';
     vehicleCatalog.style.display = 'none';
     mainMenu.classList.remove('hidden');
     vehicleCatalog.classList.add('hidden');
+    
+    // Cacher l'aide à la navigation au début
+    if (navigationHelp) {
+      navigationHelp.style.display = 'none';
+    }
   }
+  
+  // Initialiser les animations et l'application
+  createParticles();
+  createSmoke();
+  updateSurvivorCount();
+  
+  // Mettre à jour le compteur toutes les 30 secondes
+  setInterval(updateSurvivorCount, 30000);
   
   initializeApp();
 });
