@@ -55,6 +55,100 @@ h1 {
   }
 }
 
+/* Menu principal - Choix du type de catalogue */
+.main-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 50px 20px;
+}
+
+.category-choice-container {
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.category-choice {
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.95), rgba(34, 34, 34, 0.9));
+  border: 3px solid #CD853F;
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 300px;
+  backdrop-filter: blur(15px);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.category-choice:hover {
+  transform: scale(1.05);
+  border-color: #DAA520;
+  box-shadow: 0 15px 40px rgba(205, 133, 63, 0.4);
+}
+
+.category-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 69, 19, 0.3);
+  border-radius: 50%;
+  border: 2px solid #8B4513;
+}
+
+.category-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+.category-choice h2 {
+  font-family: 'Metal Mania', cursive;
+  font-size: 1.8rem;
+  color: #DAA520;
+  margin: 20px 0 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.category-choice p {
+  font-family: Arial, sans-serif;
+  color: #ccc;
+  font-size: 1rem;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Bouton retour */
+.back-button-container {
+  text-align: left;
+  padding: 20px;
+}
+
+.back-button {
+  background: linear-gradient(145deg, #8B4513, #CD853F);
+  border: 2px solid #DAA520;
+  border-radius: 25px;
+  color: white;
+  padding: 12px 24px;
+  font-family: 'Metal Mania', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.back-button:hover {
+  background: linear-gradient(145deg, #CD853F, #DAA520);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+}
+
 /* Navigation des catégories */
 .category-nav {
   display: flex;
@@ -177,11 +271,10 @@ h1 {
   pointer-events: auto;
 }
 
-/* Animation au survol - Version douce */
+/* Animation au survol */
 .vehicle-card:hover:not(.active) {
   filter: blur(0.5px) !important;
   opacity: 0.9 !important;
-  transform: scale(0.95) !important;
   z-index: 8 !important;
 }
 
@@ -287,6 +380,33 @@ h1 {
   border: 1px solid rgba(255, 102, 102, 0.5);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive Menu principal */
+@media (max-width: 768px) {
+  .category-choice-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .category-choice {
+    width: 280px;
+    padding: 30px 20px;
+  }
+  
+  .category-icon {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .category-icon img {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .category-choice h2 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Responsive Design */
