@@ -9,111 +9,140 @@
 <body>
   <h1>CATALOGUE DAY OF DECAY</h1>
   
-  <!-- Navigation par catégories -->
-  <div class="category-nav">
-    <button class="category-btn active" data-category="all">Tous</button>
-    <button class="category-btn" data-category="suv">SUV</button>
-    <button class="category-btn" data-category="motos">Motos</button>
-    <button class="category-btn" data-category="camions">Camions</button>
-    <button class="category-btn" data-category="tout-terrain">tout-terrain</button>
+  <!-- Menu principal - Choix du type de catalogue -->
+  <div id="main-menu" class="main-menu">
+    <div class="category-choice-container">
+      <div class="category-choice" data-type="lore-friendly">
+        <div class="category-icon">
+          <img src="images/apocalyptic.png" alt="Véhicules Lore-Friendly">
+        </div>
+        <h2>Véhicules Lore-Friendly</h2>
+        <p>Véhicules qui respectent l'univers post-apocalyptique</p>
+      </div>
+      
+      <div class="category-choice" data-type="import">
+        <div class="category-icon">
+          <img src="images/amarok.png" alt="Véhicules Import">
+        </div>
+        <h2>Véhicules Import</h2>
+        <p>Véhicules modernes importés dans le serveur</p>
+      </div>
+    </div>
   </div>
   
-  <div class="container">
-    <!-- SUV -->
-    <div class="vehicle-card active" data-category="suv">
-      <img src="images/amarok.png" alt="Rapide et Robuste">
-      <h2>Amarok</h2>
-      <div class="vehicle-category">SUV</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places : 6</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
+  <!-- Catalogue des véhicules -->
+  <div id="vehicle-catalog" style="display: none;">
+    <!-- Bouton retour -->
+    <div class="back-button-container">
+      <button id="back-to-menu" class="back-button">← Retour au menu</button>
+    </div>
+    
+    <!-- Navigation par catégories -->
+    <div class="category-nav">
+      <button class="category-btn active" data-category="all">Tous</button>
+      <button class="category-btn" data-category="suv">SUV</button>
+      <button class="category-btn" data-category="motos">Motos</button>
+      <button class="category-btn" data-category="camions">Camions</button>
+      <button class="category-btn" data-category="tout-terrain">Tout-terrain</button>
+    </div>
+    
+    <div class="container">
+      <!-- SUV Lore-Friendly -->
+      <div class="vehicle-card active" data-category="suv" data-type="lore-friendly">
+        <img src="images/apocalyptic.png" alt="Roi du franchissement">
+        <h2>Apocalyptic</h2>
+        <div class="vehicle-category">SUV</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <!-- SUV Import -->
+      <div class="vehicle-card" data-category="suv" data-type="import">
+        <img src="images/amarok.png" alt="Rapide et Robuste">
+        <h2>Amarok</h2>
+        <div class="vehicle-category">SUV</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 6</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="import">
+        <img src="images/4RUNE.png" alt="4x4 4rune">
+        <h2>4rune</h2>
+        <div class="vehicle-category">SUV</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 4</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <div class="vehicle-card" data-category="suv" data-type="import">
+        <img src="images/indiana.png" alt="Pick-Up, toujours pratique">
+        <h2>Indiana</h2>
+        <div class="vehicle-category">SUV</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 6</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <!-- Motos Lore-Friendly -->
+      <div class="vehicle-card" data-category="motos" data-type="lore-friendly">
+        <img src="images/babayaga2.png" alt="Moto de Biker">
+        <h2>Babayaga2</h2>
+        <div class="vehicle-category">Moto</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Diesel</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 0kg</li>
+        </ul>
+      </div>
+
+      <!-- Camions Lore-Friendly -->
+      <div class="vehicle-card" data-category="camions" data-type="lore-friendly">
+        <img src="images/barrage.png" alt="Parfait pour assurer les convois">
+        <h2>Barrage2</h2>
+        <div class="vehicle-category">Camion</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 2</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
+
+      <!-- Tout-terrain Lore-Friendly -->
+      <div class="vehicle-card" data-category="tout-terrain" data-type="lore-friendly">
+        <img src="images/blazer6.png" alt="Quad Apocalyptic">
+        <h2>Blazer6</h2>
+        <div class="vehicle-category">Quad</div>
+        <ul>
+          <li>💰 Prix : 30 EURO</li>
+          <li>⛽ Carburant : Essence</li>
+          <li>👥 Places : 1</li>
+          <li>📦 Coffre : 250kg</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="vehicle-card" data-category="suv">
-      <img src="images/4RUNE.png" alt="4x4 4rune">
-      <h2>4rune</h2>
-      <div class="vehicle-category">SUV</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places : 4</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
+    <div class="controls">
+      <button id="prev" aria-label="Précédent"></button>
+      <button id="next" aria-label="Suivant"></button>
     </div>
-
-    <div class="vehicle-card" data-category="suv">
-      <img src="images/indiana.png" alt="Pick-Up, toujours pratique">
-      <h2>Indiana</h2>
-      <div class="vehicle-category">SUV</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places : 6</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
-    </div>
-
-    <!-- Motos -->
-    <div class="vehicle-card" data-category="motos">
-      <img src="images/babayaga2.png" alt="Moto de Biker">
-      <h2>Babayaga2</h2>
-      <div class="vehicle-category">Moto</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Diesel</li>
-        <li>👥 Places : 2</li>
-        <li>📦 Coffre : 0kg</li>
-      </ul>
-    </div>
-
-    <!-- Camions -->
-    <div class="vehicle-card" data-category="camions">
-      <img src="images/barrage.png" alt="Parfait pour assurer les convois">
-      <h2>Barrage2</h2>
-      <div class="vehicle-category">Camion</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places : 2</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
-    </div>
-
-    <!-- tout-terrain -->
-    <div class="vehicle-card" data-category="tout-terrain">
-      <img src="images/apocalyptic.png" alt="Roi du franchissement">
-      <h2>Apocalyptic</h2>
-      <div class="vehicle-category">Voiture</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Diesel</li>
-        <li>👥 Places : 2</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
-    </div>
-
-    <div class="vehicle-card" data-category="tout-terrain">
-      <img src="images/blazer6.png" alt="Quad Apocalyptic">
-      <h2>Blazer6</h2>
-      <div class="vehicle-category">Quad</div>
-      <ul>
-        <li>💰 Prix : 30 EURO</li>
-        <li>⛽ Carburant : Essence</li>
-        <li>👥 Places : 1</li>
-        <li>📦 Coffre : 250kg</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="controls">
-    <button id="prev" aria-label="Précédent"></button>
-    <button id="next" aria-label="Suivant"></button>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
