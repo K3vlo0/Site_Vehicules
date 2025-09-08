@@ -752,60 +752,100 @@ h1 {
     height: 150px;
   }
 }
-/* Ajoutez ceci à la fin de votre CSS existant */
 
-/* Supprimer tout contenu indésirable en bas de page */
-body::after {
+/* PROTECTION MAXIMALE CONTRE LE CONTENU PARASITE */
+
+/* Supprimer complètement tout contenu après les contrôles */
+.controls ~ *:not(script) {
   display: none !important;
-}
-
-/* S'assurer qu'aucun texte ne déborde en bas */
-.container::after,
-.controls::after {
-  display: none !important;
-}
-
-/* Cacher tout élément avec du contenu de débogage */
-*[data-debug],
-.debug-info,
-.vehicle-info,
-*:contains("010"),
-*:contains("Prix : 35 EURO") {
-  display: none !important;
-}
-
-/* Empêcher l'affichage de contenu après les contrôles */
-.controls ~ * {
-  display: none !important;
-}
-
-/* Exception pour le script */
-.controls ~ script {
-  display: block !important;
-}
-
-/* S'assurer que seuls les éléments du DOM principal sont visibles */
-body > *:not(#main-menu):not(#vehicle-catalog):not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(script) {
-  display: none !important;
-}
-
-/* Nettoyer les pseudo-éléments indésirables */
-.vehicle-card::after,
-.container::after {
-  content: none !important;
-  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 /* Empêcher l'affichage de texte libre dans le body */
-body {
-  overflow-x: hidden;
-}
-
 body > text,
-body > textNode {
+body > textNode,
+body > :not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(#main-menu):not(#vehicle-catalog):not(script) {
   display: none !important;
 }
 
+/* Cacher spécifiquement les éléments contenant "oto" */
+*:contains("oto"),
+*:contains("010"),
+*[data-vehicle="oto"],
+*[id*="oto"],
+*[class*="oto"] {
+  display: none !important;
+  visibility: hidden !important;
+}
 
+/* Empêcher l'affichage de tout pseudo-contenu */
+*::after,
+*::before {
+  content: none !important;
+}
 
+/* Exception pour les éléments nécessaires */
+h1::before,
+h1::after,
+.social-btn::before,
+.controls button::before,
+.vehicle-category::before,
+.vehicle-category::after {
+  content: initial !important;
+}
 
+/* Masquer tout contenu orphelin */
+body > div:not([id]):not([class]),
+body > span:not([id]):not([class]),
+body > p:not([id]):not([class]) {
+  display: none !important;
+}
+
+/* Protection contre l'injection de contenu */
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* Empêcher l'affichage de données de débogage */
+[data-debug],
+[data-info],
+.debug,
+.info,
+.log {
+  display: none !important;
+}
+
+/* Nettoyer les éléments avec du contenu suspect */
+*[textContent*="oto"],
+*[innerText*="oto"],
+*[innerHTML*="oto"] {
+  display: none !important;
+}
+
+/* S'assurer que seuls les éléments principaux sont visibles */
+body {
+  counter-reset: none;
+}
+
+/* Empêcher l'affichage de contenu généré par JavaScript malformé */
+.vehicle-card:empty,
+div:empty:not(.particles):not(.smoke),
+span:empty {
+  display: none !important;
+}
+
+/* Protection finale - masquer tout ce qui n'est pas dans nos conteneurs */
+body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(#main-menu):not(#vehicle-catalog):not(script):not(style):not(link) {
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+}
