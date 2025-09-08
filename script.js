@@ -2,25 +2,71 @@
 document.addEventListener('DOMContentLoaded', function() {
   const cards = document.querySelectorAll(".vehicle-card");
   const categoryBtns = document.querySelectorAll(".category-btn");
+  const mainMenu = document.getElementById('main-menu');
+  const vehicleCatalog = document.getElementById('vehicle-catalog');
+  const categoryChoices = document.querySelectorAll('.category-choice');
+  const backButton = document.getElementById('back-to-menu');
+  
   let current = 0;
   let currentCategory = 'all';
+  let currentCatalogType = 'all'; // 'lore-friendly' or 'import'
   let filteredCards = [...cards];
 
-  // Filter cards by category
-  function filterCardsByCategory(category) {
-    currentCategory = category;
+  // Show main menu, hide catalog
+  function showMainMenu() {
+    mainMenu.style.display = 'flex';
+    vehicleCatalog.style.display = 'none';
+    currentCatalogType = 'all';
+  }
+
+  // Show catalog, hide main menu
+  function showCatalog(catalogType) {
+    mainMenu.style.display = 'none';
+    vehicleCatalog.style.display = 'block';
+    currentCatalogType = catalogType;
     
-    if (category === 'all') {
-      filteredCards = [...cards];
+    // Reset category to "Tous"
+    currentCategory = 'all';
+    categoryBtns.forEach(btn => btn.classList.remove('active'));
+    categoryBtns[0].classList.add('active'); // Premier bouton "Tous"
+    
+    // Filter and show vehicles
+    filterCardsByCatalogType();
+  }
+
+  // Filter cards by catalog type (lore-friendly or import)
+  function filterCardsByCatalogType() {
+    let availableCards;
+    
+    if (currentCatalogType === 'lore-friendly') {
+      availableCards = [...cards].filter(card => 
+        card.getAttribute('data-type') === 'lore-friendly'
+      );
+    } else if (currentCatalogType === 'import') {
+      availableCards = [...cards].filter(card => 
+        card.getAttribute('data-type') === 'import'
+      );
     } else {
-      filteredCards = [...cards].filter(card => 
-        card.getAttribute('data-category') === category
+      availableCards = [...cards];
+    }
+
+    // Then filter by category
+    if (currentCategory === 'all') {
+      filteredCards = availableCards;
+    } else {
+      filteredCards = availableCards.filter(card => 
+        card.getAttribute('data-category') === currentCategory
       );
     }
     
-    // Reset current to 0 when changing category
     current = 0;
     updateCarousel();
+  }
+
+  // Filter cards by category within current catalog type
+  function filterCardsByCategory(category) {
+    currentCategory = category;
+    filterCardsByCatalogType();
   }
 
   // Update carousel display
@@ -50,7 +96,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Category navigation
+  // Category choice event listeners (main menu)
+  categoryChoices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      const catalogType = choice.getAttribute('data-type');
+      showCatalog(catalogType);
+    });
+  });
+
+  // Back button event listener
+  if (backButton) {
+    backButton.addEventListener('click', showMainMenu);
+  }
+
+  // Category navigation (in catalog)
   categoryBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       // Update active category button
@@ -87,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Keyboard navigation
   document.addEventListener("keydown", (e) => {
+    // Only work if catalog is visible
+    if (vehicleCatalog.style.display === 'none') return;
     if (filteredCards.length === 0) return;
     
     if (e.key === "ArrowRight") {
@@ -95,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (e.key === "ArrowLeft") {
       current = (current - 1 + filteredCards.length) % filteredCards.length;
       updateCarousel();
+    } else if (e.key === "Escape") {
+      showMainMenu();
     }
   });
 
@@ -110,6 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Initialize carousel
-  updateCarousel();
+  // Initialize - show main menu
+  showMainMenu();
 });
