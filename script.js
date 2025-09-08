@@ -41,76 +41,8 @@ function updateSurvivorCount() {
   }
 }
 
-// Fonction de nettoyage radical du DOM
-function cleanupDOM() {
-  // Supprimer tous les nœuds de texte parasites dans le body
-  const walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT,
-    null,
-    false
-  );
-
-  const textNodes = [];
-  let node;
-  while (node = walker.nextNode()) {
-    textNodes.push(node);
-  }
-
-  textNodes.forEach(textNode => {
-    const text = textNode.textContent.trim();
-    const parent = textNode.parentNode;
-    
-    // Supprimer les nœuds de texte contenant "oto", "010", ou d'autres contenus parasites
-    if (text.includes('oto') || text.includes('010') || text.includes('Prix :') || text.includes('Carburant :')) {
-      // Vérifier que ce n'est pas dans un élément valide
-      if (!parent.closest('.vehicle-card') && !parent.closest('.survivor-counter')) {
-        textNode.remove();
-      }
-    }
-    
-    // Supprimer les nœuds de texte vides ou avec juste des espaces
-    if (text === '' || text.match(/^\s*$/)) {
-      textNode.remove();
-    }
-  });
-
-  // Supprimer tous les éléments avec des classes ou IDs suspects
-  const suspiciousElements = document.querySelectorAll('[class*="debug"], [id*="debug"], [class*="info"], [id*="info"]');
-  suspiciousElements.forEach(el => el.remove());
-
-  // Supprimer tout contenu directement dans le body qui n'est pas dans nos conteneurs principaux
-  const allowedElements = [
-    'particles', 'smoke', 'survivor-counter', 'navigation-help', 'social-buttons', 
-    'main-menu', 'vehicle-catalog', 'script'
-  ];
-  
-  Array.from(document.body.children).forEach(child => {
-    const tagName = child.tagName.toLowerCase();
-    const id = child.id;
-    const className = child.className;
-    
-    // Garder seulement les éléments autorisés
-    if (tagName === 'h1' || 
-        allowedElements.includes(id) || 
-        allowedElements.some(allowed => className.includes(allowed)) ||
-        tagName === 'script') {
-      return; // Garder cet élément
-    } else {
-      // Vérifier si l'élément contient du contenu parasite
-      const text = child.textContent || '';
-      if (text.includes('oto') || text.includes('010') || text.length < 3) {
-        child.remove();
-      }
-    }
-  });
-}
-
 // Attendre le chargement complet du DOM
 document.addEventListener('DOMContentLoaded', function() {
-  // Nettoyer le DOM dès le chargement
-  cleanupDOM();
-  
   const cards = document.querySelectorAll(".vehicle-card");
   const categoryBtns = document.querySelectorAll(".category-btn");
   const mainMenu = document.getElementById('main-menu');
@@ -124,43 +56,20 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCatalogType = 'all';
   let filteredCards = [...cards];
 
-  // Nettoyer les cartes invalides ou vides
-  function cleanupInvalidCards() {
-    cards.forEach(card => {
-      const h2 = card.querySelector('h2');
-      const img = card.querySelector('img');
-      
-      // Supprimer les cartes sans nom ou avec des noms invalides
-      if (!h2 || !h2.textContent.trim() || h2.textContent.trim().length < 2) {
-        card.remove();
-        return;
-      }
-      
-      // Supprimer les cartes sans image valide
-      if (!img || !img.src || img.src.includes('undefined')) {
-        card.remove();
-        return;
-      }
-      
-      // Vérifier que la carte a les attributs nécessaires
-      if (!card.getAttribute('data-category') || !card.getAttribute('data-type')) {
-        card.remove();
-        return;
-      }
-    });
-    
-    // Mettre à jour la liste des cartes après nettoyage
-    filteredCards = [...document.querySelectorAll(".vehicle-card")];
-  }
+  console.log('Total véhicules chargés:', cards.length);
+  
+  // Compter les véhicules par catégorie pour debug
+  const categoryCounts = {};
+  cards.forEach(card => {
+    const category = card.getAttribute('data-category');
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+  console.log('Répartition par catégorie:', categoryCounts);
 
   // Afficher le menu principal, cacher le catalogue
   function showMainMenu() {
-    // Nettoyer le DOM avant d'afficher le menu
-    cleanupDOM();
-    
     vehicleCatalog.classList.add('hidden');
     
-    // Cacher l'aide à la navigation
     if (navigationHelp) {
       navigationHelp.style.display = 'none';
     }
@@ -171,8 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
       
       setTimeout(() => {
         mainMenu.classList.remove('hidden');
-        // Nettoyage supplémentaire après affichage
-        cleanupDOM();
       }, 50);
     }, 500);
     
@@ -181,76 +88,99 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Afficher le catalogue, cacher le menu principal
   function showCatalog(catalogType) {
-    // Nettoyer le DOM avant d'afficher le catalogue
-    cleanupDOM();
-    
     mainMenu.classList.add('hidden');
     
     setTimeout(() => {
       mainMenu.style.display = 'none';
       vehicleCatalog.style.display = 'block';
       
-      // Afficher l'aide à la navigation seulement sur desktop
       if (navigationHelp && window.innerWidth > 768) {
         navigationHelp.style.display = 'block';
       }
       
       setTimeout(() => {
         vehicleCatalog.classList.remove('hidden');
-        // Nettoyage supplémentaire après affichage
-        cleanupDOM();
       }, 50);
     }, 500);
     
     currentCatalogType = catalogType;
     currentCategory = 'all';
+    
+    // Réinitialiser les boutons de catégorie
     categoryBtns.forEach(btn => btn.classList.remove('active'));
     if (categoryBtns[0]) categoryBtns[0].classList.add('active');
     
-    filterCardsByCatalogType();
+    filterCards();
   }
 
-  // Filtrer les cartes par type de catalogue (Vanilla ou import)
-  function filterCardsByCatalogType() {
+  // Fonction principale de filtrage
+  function filterCards() {
+    console.log(`Filtrage: type=${currentCatalogType}, catégorie=${currentCategory}`);
+    
     const allCards = document.querySelectorAll(".vehicle-card");
-    let availableCards;
+    let visibleCards = [];
     
-    if (currentCatalogType === 'Vanilla') {
-      availableCards = [...allCards].filter(card => 
-        card.getAttribute('data-type') === 'Vanilla'
-      );
-    } else if (currentCatalogType === 'import') {
-      availableCards = [...allCards].filter(card => 
-        card.getAttribute('data-type') === 'import'
-      );
-    } else {
-      availableCards = [...allCards];
-    }
-
-    // Ensuite filtrer par catégorie
-    if (currentCategory === 'all') {
-      filteredCards = availableCards;
-    } else {
-      filteredCards = availableCards.filter(card => 
-        card.getAttribute('data-category') === currentCategory
-      );
-    }
+    allCards.forEach(card => {
+      let shouldShow = true;
+      
+      // Filtrer par type de catalogue (vanilla vs import)
+      if (currentCatalogType !== 'all') {
+        const cardType = card.getAttribute('data-type');
+        if (currentCatalogType === 'vanilla' && cardType !== 'vanilla') {
+          shouldShow = false;
+        } else if (currentCatalogType === 'import' && cardType !== 'import') {
+          shouldShow = false;
+        }
+      }
+      
+      // Filtrer par catégorie de véhicule
+      if (shouldShow && currentCategory !== 'all') {
+        const cardCategory = card.getAttribute('data-category');
+        if (cardCategory !== currentCategory) {
+          shouldShow = false;
+        }
+      }
+      
+      if (shouldShow) {
+        visibleCards.push(card);
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+        // Retirer toutes les classes d'état du carousel
+        card.classList.remove("active", "prev", "next", "far-prev", "far-next");
+      }
+    });
     
+    filteredCards = visibleCards;
     current = 0;
+    
+    console.log(`Véhicules affichés: ${filteredCards.length}`);
+    
+    // Compter par catégorie dans les résultats filtrés
+    const filteredCategoryCounts = {};
+    filteredCards.forEach(card => {
+      const category = card.getAttribute('data-category');
+      filteredCategoryCounts[category] = (filteredCategoryCounts[category] || 0) + 1;
+    });
+    console.log('Répartition filtrée:', filteredCategoryCounts);
+    
     updateCarousel();
   }
 
   // Mettre à jour l'affichage du carousel
   function updateCarousel() {
-    // Cacher toutes les cartes d'abord
+    // Retirer toutes les classes d'état
     const allCards = document.querySelectorAll(".vehicle-card");
     allCards.forEach(card => {
       card.classList.remove("active", "prev", "next", "far-prev", "far-next");
     });
     
-    // Travailler uniquement avec les cartes filtrées
-    if (filteredCards.length === 0) return;
+    if (filteredCards.length === 0) {
+      console.log('Aucun véhicule à afficher');
+      return;
+    }
     
+    // Appliquer les classes de position seulement aux cartes visibles
     filteredCards.forEach((card, index) => {
       const position = index - current;
       
@@ -266,19 +196,16 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.add("far-prev");
       }
     });
-    
-    // Nettoyer après chaque mise à jour
-    setTimeout(cleanupDOM, 100);
   }
 
-  // Navigation suivant avec boucle dans la catégorie
+  // Navigation suivant avec boucle
   function nextCard() {
     if (filteredCards.length === 0) return;
     current = (current + 1) % filteredCards.length;
     updateCarousel();
   }
 
-  // Navigation précédent avec boucle dans la catégorie
+  // Navigation précédent avec boucle
   function prevCard() {
     if (filteredCards.length === 0) return;
     current = (current - 1 + filteredCards.length) % filteredCards.length;
@@ -289,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
   categoryChoices.forEach(choice => {
     choice.addEventListener('click', () => {
       const catalogType = choice.getAttribute('data-type');
+      console.log('Catalogue sélectionné:', catalogType);
       showCatalog(catalogType);
     });
   });
@@ -305,25 +233,26 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.classList.add("active");
       
       const category = btn.getAttribute('data-category');
+      console.log('Catégorie sélectionnée:', category);
       currentCategory = category;
       current = 0;
-      filterCardsByCatalogType();
+      filterCards();
     });
   });
 
-  // Bouton suivant du carousel
+  // Boutons de navigation du carousel
   const nextBtn = document.getElementById("next");
+  const prevBtn = document.getElementById("prev");
+  
   if (nextBtn) {
     nextBtn.addEventListener("click", nextCard);
   }
-
-  // Bouton précédent du carousel
-  const prevBtn = document.getElementById("prev");
+  
   if (prevBtn) {
     prevBtn.addEventListener("click", prevCard);
   }
 
-  // Navigation au clavier améliorée
+  // Navigation au clavier
   document.addEventListener("keydown", (e) => {
     if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     if (filteredCards.length === 0) return;
@@ -351,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Clic sur une carte pour la sélectionner
   document.addEventListener("click", (e) => {
     const card = e.target.closest('.vehicle-card');
-    if (card) {
+    if (card && filteredCards.includes(card)) {
       const filteredIndex = filteredCards.indexOf(card);
       if (filteredIndex !== -1) {
         current = filteredIndex;
@@ -360,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Support tactile pour mobile (swipe)
+  // Support tactile pour mobile
   let startX = 0;
   let endX = 0;
 
@@ -390,8 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialisation de l'application
   function initializeApp() {
-    cleanupInvalidCards();
-    cleanupDOM();
+    console.log('Initialisation de l\'application');
     
     mainMenu.style.display = 'flex';
     vehicleCatalog.style.display = 'none';
@@ -402,8 +330,10 @@ document.addEventListener('DOMContentLoaded', function() {
       navigationHelp.style.display = 'none';
     }
     
-    // Nettoyage final après initialisation
-    setTimeout(cleanupDOM, 500);
+    // Initialiser avec tous les véhicules
+    currentCatalogType = 'all';
+    currentCategory = 'all';
+    filterCards();
   }
   
   // Initialiser les animations et l'application
@@ -414,9 +344,5 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mettre à jour le compteur toutes les 30 secondes
   setInterval(updateSurvivorCount, 30000);
   
-  // Nettoyer le DOM régulièrement
-  setInterval(cleanupDOM, 5000);
-  
   initializeApp();
 });
-
