@@ -1473,14 +1473,14 @@ h1 {
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
       
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
         particle.style.width = Math.random() * 4 + 2 + 'px';
         particle.style.height = particle.style.width;
         particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
         particlesContainer.appendChild(particle);
       }
     }
@@ -1489,14 +1489,14 @@ h1 {
     function createSmoke() {
       const smokeContainer = document.getElementById('smoke');
       
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 20; i++) {
         const smoke = document.createElement('div');
         smoke.className = 'smoke-particle';
         smoke.style.left = Math.random() * 100 + '%';
-        smoke.style.width = Math.random() * 100 + 50 + 'px';
+        smoke.style.width = Math.random() * 80 + 40 + 'px';
         smoke.style.height = smoke.style.width;
         smoke.style.animationDelay = Math.random() * 25 + 's';
-        smoke.style.animationDuration = (Math.random() * 15 + 20) + 's';
+        smoke.style.animationDuration = (Math.random() * 20 + 25) + 's';
         smokeContainer.appendChild(smoke);
       }
     }
