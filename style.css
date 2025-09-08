@@ -181,6 +181,7 @@ h1 {
 .vehicle-card:hover:not(.active) {
   filter: blur(0.5px) !important;
   opacity: 0.9 !important;
+  transform: scale(0.95) !important;
   z-index: 8 !important;
 }
 
@@ -420,4 +421,3 @@ h1 {
     height: 50px;
   }
 }
-
