@@ -161,7 +161,7 @@ h1 {
 .category-choice h2 {
   font-family: 'Metal Mania', cursive;
   font-size: 1.8rem;
-  color: #DAA520;
+  color: #5f340e;
   margin: 20px 0 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -633,3 +633,4 @@ h1 {
     font-size: 0.85rem;
   }
 }
+
