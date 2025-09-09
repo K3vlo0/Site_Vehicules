@@ -110,25 +110,25 @@
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
 }
 
-/* Message de rappel important */
+/* Message de rappel important - aligné avec les catégories */
 .important-notice {
   position: fixed;
-  top: 50%;
+  bottom: 200px; /* Positionné dans la zone des catégories */
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   background: linear-gradient(145deg, rgba(40, 20, 10, 0.98), rgba(20, 20, 20, 0.95));
-  border: 3px solid #ff6b35;
+  border: 2px solid #ff6b35;
   border-radius: 15px;
   padding: 0;
-  max-width: 600px;
-  width: 90%;
+  width: 680px; /* Largeur des deux catégories + gap (300px + 80px + 300px) */
+  max-width: 90vw;
   backdrop-filter: blur(15px);
   box-shadow: 
-    0 0 30px rgba(255, 107, 53, 0.6),
-    0 0 60px rgba(255, 107, 53, 0.3),
+    0 0 20px rgba(255, 107, 53, 0.6),
+    0 0 40px rgba(255, 107, 53, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  animation: pulseWarning 2s ease-in-out infinite;
+  animation: pulseWarning 3s ease-in-out infinite;
   opacity: 1;
   visibility: visible;
   transition: all 0.5s ease;
@@ -137,50 +137,55 @@
 .important-notice.hidden {
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -50%) scale(0.8);
+  transform: translateX(-50%) translateY(20px);
 }
 
 @keyframes pulseWarning {
   0%, 100% { 
+    border-color: #ff6b35;
     box-shadow: 
-      0 0 30px rgba(255, 107, 53, 0.6),
-      0 0 60px rgba(255, 107, 53, 0.3),
+      0 0 20px rgba(255, 107, 53, 0.6),
+      0 0 40px rgba(255, 107, 53, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   50% { 
+    border-color: #ff8c5c;
     box-shadow: 
-      0 0 40px rgba(255, 107, 53, 0.8),
-      0 0 80px rgba(255, 107, 53, 0.5),
+      0 0 30px rgba(255, 107, 53, 0.8),
+      0 0 60px rgba(255, 107, 53, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
 
 .notice-content {
   position: relative;
-  padding: 25px 50px 25px 25px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
 }
 
 .notice-icon {
-  font-size: 2rem;
+  font-size: 1.3rem;
   color: #ff6b35;
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
-  animation: bounce 1s ease-in-out infinite;
+  animation: bounce 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-3px); }
 }
 
 .notice-text {
   flex: 1;
   color: #eee;
   font-family: 'Metal Mania', cursive;
-  font-size: 1rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.3;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
@@ -189,30 +194,9 @@
   text-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
 }
 
+/* Plus de bouton de fermeture */
 .notice-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #ff6b35;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-weight: bold;
-}
-
-.notice-close:hover {
-  background: rgba(255, 107, 53, 0.2);
-  transform: scale(1.1);
-  text-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+  display: none !important;
 }
 
 /* Aide à la navigation */
@@ -799,35 +783,11 @@ h1 {
 }
 
 /* Media Queries pour responsive */
-@media (min-aspect-ratio: 16/9) {
-  body {
-    background-size: 100% 100%;
-  }
-}
-
 @media (max-width: 768px) {
-  body {
-    background-attachment: scroll;
-    background-size: cover;
-    min-height: 100vh;
-  }
-  
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('./images/day-of-decay-background.png') center/cover no-repeat;
-    z-index: -2;
-    pointer-events: none;
-  }
-
   .important-notice {
     width: 95%;
     max-width: 95vw;
-    bottom: 80px; /* Ajusté pour tablette */
+    bottom: 150px;
   }
   
   .notice-content {
@@ -844,70 +804,13 @@ h1 {
     font-size: 0.75rem;
     line-height: 1.2;
   }
-
-  .survivor-counter {
-    top: 10px;
-    right: 10px;
-    padding: 10px 15px;
-    font-size: 0.9rem;
-  }
-  
-  .navigation-help {
-    display: none !important;
-  }
-  
-  .social-buttons {
-    bottom: 10px; /* Position normale */
-    left: 10px;
-    gap: 10px;
-  }
-  
-  .social-logo-btn {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .category-choice-container {
-    flex-direction: column;
-    gap: 40px;
-  }
-  
-  .category-choice {
-    width: 280px;
-    padding: 30px 20px;
-  }
-  
-  .category-icon {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .category-icon img {
-    width: 70px;
-    height: 70px;
-  }
-  
-  .category-choice h2 {
-    font-size: 1.5rem;
-  }
-  
-  .controls button {
-    width: 60px;
-    height: 60px;
-    font-size: 1.2rem;
-  }
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 2rem;
-    margin: 15px;
-  }
-
   .important-notice {
     width: 98%;
     max-width: 98vw;
-    bottom: 60px; /* Ajusté pour mobile */
+    bottom: 120px;
   }
   
   .notice-content {
@@ -925,144 +828,4 @@ h1 {
     font-size: 0.65rem;
     line-height: 1.1;
   }
-
-  .social-buttons {
-    flex-direction: row;
-    bottom: 10px; /* Position normale */
-    left: 50%;
-    transform: translateX(-50%);
-    gap: 15px;
-  }
-  
-  .social-logo-btn {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .social-logo {
-    padding: 6px;
-  }
-  
-  .controls button {
-    width: 50px;
-    height: 50px;
-    font-size: 1rem;
-  }
-  
-  .controls {
-    gap: 30px;
-  }
-
-  .vehicle-card {
-    width: 250px;
-    min-width: 250px;
-    padding: 15px;
-  }
-
-  .vehicle-card img {
-    height: 150px;
-  }
-}
-
-/* PROTECTION MAXIMALE CONTRE LE CONTENU PARASITE */
-
-/* Supprimer complètement tout contenu après les contrôles */
-.controls ~ *:not(script) {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-/* Empêcher l'affichage de texte libre dans le body */
-body > text,
-body > textNode {
-  display: none !important;
-}
-
-/* Cacher spécifiquement les éléments avec des IDs ou classes suspectes */
-*[data-vehicle*="oto"],
-*[id*="oto"],
-*[class*="oto"] {
-  display: none !important;
-  visibility: hidden !important;
-}
-
-/* Masquer tout contenu orphelin */
-body > div:not([id]):not([class]),
-body > span:not([id]):not([class]),
-body > p:not([id]):not([class]) {
-  display: none !important;
-}
-
-/* Protection contre l'injection de contenu */
-body {
-  overflow-x: hidden;
-  position: relative;
-}
-
-body::after {
-  content: "" !important;
-  display: none !important;
-}
-
-/* Empêcher l'affichage de données de débogage */
-[data-debug],
-[data-info],
-.debug,
-.info,
-.log {
-  display: none !important;
-}
-
-/* Empêcher l'affichage de contenu généré par JavaScript malformé */
-.vehicle-card:empty,
-div:empty:not(.particles):not(.smoke),
-span:empty {
-  display: none !important;
-}
-
-/* Protection finale - masquer tout ce qui n'est pas dans nos conteneurs */
-body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.important-notice):not(.navigation-help):not(.social-buttons):not(h1):not(#main-menu):not(#vehicle-catalog):not(script):not(style):not(link) {
-  position: absolute !important;
-  left: -9999px !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  display: none !important;
-}
-
-/* Protection spécifique contre le texte orphelin */
-body::after {
-  content: "" !important;
-}
-
-/* Masquer tout texte qui s'affiche en dehors des conteneurs */
-body > text,
-body > textNode,
-body > string {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-/* Masquer les fragments de code HTML qui apparaissent */
-*:contains("images/"),
-*:contains("alt="),
-*:contains("src=") {
-  display: none !important;
-}
-
-/* Protection contre l'affichage de fragments HTML */
-body {
-  overflow: hidden;
-}
-
-body * {
-  white-space: normal;
-}
-
-/* Empêcher l'affichage de contenu malformé */
-*[src*="apocalyptic"],
-*[alt*="franchissement"] {
-  display: none !important;
-  visibility: hidden !important;
 }
