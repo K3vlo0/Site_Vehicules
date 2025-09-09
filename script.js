@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const backButton = document.getElementById('back-to-menu');
   const navigationHelp = document.getElementById('navigationHelp');
   const importantNotice = document.getElementById('importantNotice');
-  const noticeClose = document.getElementById('noticeClose');
   
   let current = 0;
   let currentCategory = 'all';
@@ -72,25 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function hideImportantNotice() {
     if (importantNotice) {
       importantNotice.classList.add('hidden');
-      setTimeout(() => {
-        importantNotice.style.display = 'none';
-      }, 500);
     }
   }
 
   // Fonction pour afficher le message de rappel
   function showImportantNotice() {
     if (importantNotice) {
-      importantNotice.style.display = 'block';
-      setTimeout(() => {
-        importantNotice.classList.remove('hidden');
-      }, 50);
+      importantNotice.classList.remove('hidden');
     }
-  }
-
-  // Event listener pour fermer le message avec le bouton X
-  if (noticeClose) {
-    noticeClose.addEventListener('click', hideImportantNotice);
   }
 
   // Afficher le menu principal, cacher le catalogue
