@@ -43,43 +43,28 @@ function updateSurvivorCount() {
 
 // Attendre le chargement complet du DOM
 document.addEventListener('DOMContentLoaded', function() {
-  const cards = document.querySelectorAll('.vehicle-card');
-  const categoryBtns = document.querySelectorAll('.category-btn');
+  const cards = document.querySelectorAll(".vehicle-card");
+  const categoryBtns = document.querySelectorAll(".category-btn");
   const mainMenu = document.getElementById('main-menu');
   const vehicleCatalog = document.getElementById('vehicle-catalog');
   const categoryChoices = document.querySelectorAll('.category-choice');
   const backButton = document.getElementById('back-to-menu');
   const navigationHelp = document.getElementById('navigationHelp');
-  const importantNotice = document.getElementById('importantNotice');
   
   let current = 0;
   let currentCategory = 'all';
   let currentCatalogType = 'all';
-  let filteredCards = Array.from(cards);
+  let filteredCards = [...cards];
 
   console.log('Total véhicules chargés:', cards.length);
   
   // Compter les véhicules par catégorie pour debug
   const categoryCounts = {};
-  cards.forEach(function(card) {
+  cards.forEach(card => {
     const category = card.getAttribute('data-category');
     categoryCounts[category] = (categoryCounts[category] || 0) + 1;
   });
   console.log('Répartition par catégorie:', categoryCounts);
-
-  // Fonction pour masquer le message de rappel
-  function hideImportantNotice() {
-    if (importantNotice) {
-      importantNotice.classList.add('hidden');
-    }
-  }
-
-  // Fonction pour afficher le message de rappel
-  function showImportantNotice() {
-    if (importantNotice) {
-      importantNotice.classList.remove('hidden');
-    }
-  }
 
   // Afficher le menu principal, cacher le catalogue
   function showMainMenu() {
@@ -89,13 +74,12 @@ document.addEventListener('DOMContentLoaded', function() {
       navigationHelp.style.display = 'none';
     }
     
-    setTimeout(function() {
+    setTimeout(() => {
       vehicleCatalog.style.display = 'none';
       mainMenu.style.display = 'flex';
       
-      setTimeout(function() {
+      setTimeout(() => {
         mainMenu.classList.remove('hidden');
-        showImportantNotice(); // Afficher le message quand on revient au menu
       }, 50);
     }, 500);
     
@@ -105,9 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Afficher le catalogue, cacher le menu principal
   function showCatalog(catalogType) {
     mainMenu.classList.add('hidden');
-    hideImportantNotice(); // Masquer le message quand on entre dans le catalogue
     
-    setTimeout(function() {
+    setTimeout(() => {
       mainMenu.style.display = 'none';
       vehicleCatalog.style.display = 'block';
       
@@ -115,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navigationHelp.style.display = 'block';
       }
       
-      setTimeout(function() {
+      setTimeout(() => {
         vehicleCatalog.classList.remove('hidden');
       }, 50);
     }, 500);
@@ -124,24 +107,20 @@ document.addEventListener('DOMContentLoaded', function() {
     currentCategory = 'all';
     
     // Réinitialiser les boutons de catégorie
-    categoryBtns.forEach(function(btn) {
-      btn.classList.remove('active');
-    });
-    if (categoryBtns[0]) {
-      categoryBtns[0].classList.add('active');
-    }
+    categoryBtns.forEach(btn => btn.classList.remove('active'));
+    if (categoryBtns[0]) categoryBtns[0].classList.add('active');
     
     filterCards();
   }
 
   // Fonction principale de filtrage
   function filterCards() {
-    console.log('Filtrage: type=' + currentCatalogType + ', catégorie=' + currentCategory);
+    console.log(`Filtrage: type=${currentCatalogType}, catégorie=${currentCategory}`);
     
-    const allCards = document.querySelectorAll('.vehicle-card');
+    const allCards = document.querySelectorAll(".vehicle-card");
     let visibleCards = [];
     
-    allCards.forEach(function(card) {
+    allCards.forEach(card => {
       let shouldShow = true;
       
       // Filtrer par type de catalogue (vanilla vs import)
@@ -168,18 +147,18 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         card.style.display = 'none';
         // Retirer toutes les classes d'état du carousel
-        card.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+        card.classList.remove("active", "prev", "next", "far-prev", "far-next");
       }
     });
     
     filteredCards = visibleCards;
     current = 0;
     
-    console.log('Véhicules affichés: ' + filteredCards.length);
+    console.log(`Véhicules affichés: ${filteredCards.length}`);
     
     // Compter par catégorie dans les résultats filtrés
     const filteredCategoryCounts = {};
-    filteredCards.forEach(function(card) {
+    filteredCards.forEach(card => {
       const category = card.getAttribute('data-category');
       filteredCategoryCounts[category] = (filteredCategoryCounts[category] || 0) + 1;
     });
@@ -191,9 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mettre à jour l'affichage du carousel
   function updateCarousel() {
     // Retirer toutes les classes d'état
-    const allCards = document.querySelectorAll('.vehicle-card');
-    allCards.forEach(function(card) {
-      card.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+    const allCards = document.querySelectorAll(".vehicle-card");
+    allCards.forEach(card => {
+      card.classList.remove("active", "prev", "next", "far-prev", "far-next");
     });
     
     if (filteredCards.length === 0) {
@@ -202,19 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Appliquer les classes de position seulement aux cartes visibles
-    filteredCards.forEach(function(card, index) {
+    filteredCards.forEach((card, index) => {
       const position = index - current;
       
       if (position === 0) {
-        card.classList.add('active');
+        card.classList.add("active");
       } else if (position === 1) {
-        card.classList.add('next');
+        card.classList.add("next");
       } else if (position === -1) {
-        card.classList.add('prev');
+        card.classList.add("prev");
       } else if (position === 2) {
-        card.classList.add('far-next');
+        card.classList.add("far-next");
       } else if (position === -2) {
-        card.classList.add('far-prev');
+        card.classList.add("far-prev");
       }
     });
   }
@@ -234,8 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Event listeners pour les choix de catalogue (menu principal)
-  categoryChoices.forEach(function(choice) {
-    choice.addEventListener('click', function() {
+  categoryChoices.forEach(choice => {
+    choice.addEventListener('click', () => {
       const catalogType = choice.getAttribute('data-type');
       console.log('Catalogue sélectionné:', catalogType);
       showCatalog(catalogType);
@@ -248,12 +227,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Navigation par catégories (dans le catalogue)
-  categoryBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      categoryBtns.forEach(function(b) {
-        b.classList.remove('active');
-      });
-      btn.classList.add('active');
+  categoryBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      categoryBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
       
       const category = btn.getAttribute('data-category');
       console.log('Catégorie sélectionnée:', category);
@@ -264,36 +241,36 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Boutons de navigation du carousel
-  const nextBtn = document.getElementById('next');
-  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById("next");
+  const prevBtn = document.getElementById("prev");
   
   if (nextBtn) {
-    nextBtn.addEventListener('click', nextCard);
+    nextBtn.addEventListener("click", nextCard);
   }
   
   if (prevBtn) {
-    prevBtn.addEventListener('click', prevCard);
+    prevBtn.addEventListener("click", prevCard);
   }
 
   // Navigation au clavier
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener("keydown", (e) => {
     if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     if (filteredCards.length === 0) return;
     
     switch(e.key) {
-      case 'ArrowRight':
+      case "ArrowRight":
         e.preventDefault();
         nextCard();
         break;
-      case 'ArrowLeft':
+      case "ArrowLeft":
         e.preventDefault();
         prevCard();
         break;
-      case 'Escape':
+      case "Escape":
         e.preventDefault();
         showMainMenu();
         break;
-      case ' ':
+      case " ":
         e.preventDefault();
         nextCard();
         break;
@@ -301,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Clic sur une carte pour la sélectionner
-  document.addEventListener('click', function(e) {
+  document.addEventListener("click", (e) => {
     const card = e.target.closest('.vehicle-card');
     if (card && filteredCards.includes(card)) {
       const filteredIndex = filteredCards.indexOf(card);
@@ -316,12 +293,12 @@ document.addEventListener('DOMContentLoaded', function() {
   let startX = 0;
   let endX = 0;
 
-  document.addEventListener('touchstart', function(e) {
+  document.addEventListener('touchstart', (e) => {
     if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     startX = e.touches[0].clientX;
   });
 
-  document.addEventListener('touchend', function(e) {
+  document.addEventListener('touchend', (e) => {
     if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
     endX = e.changedTouches[0].clientX;
     handleSwipe();
@@ -340,32 +317,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Fonction pour nettoyer le contenu parasite
-  function cleanParasiteContent() {
-    // Supprimer les nœuds de texte orphelins qui contiennent du code HTML
-    const walker = document.createTreeWalker(
-      document.body,
-      NodeFilter.SHOW_TEXT,
-      null,
-      false
-    );
-    
-    const textNodes = [];
-    let node;
-    
-    while ((node = walker.nextNode())) {
-      textNodes.push(node);
-    }
-    
-    textNodes.forEach(function(textNode) {
-      const content = textNode.textContent.trim();
-      // Supprimer les nœuds qui contiennent des fragments HTML
-      if (content.includes('images/') || content.includes('alt=') || content.includes('src=') || content.includes('apocalyptic.png')) {
-        textNode.remove();
-      }
-    });
-  }
-
   // Initialisation de l'application
   function initializeApp() {
     console.log('Initialisation de l\'application');
@@ -379,19 +330,10 @@ document.addEventListener('DOMContentLoaded', function() {
       navigationHelp.style.display = 'none';
     }
     
-    // Nettoyer le contenu parasite
-    cleanParasiteContent();
-    
-    // Afficher le message de rappel au démarrage
-    showImportantNotice();
-    
     // Initialiser avec tous les véhicules
     currentCatalogType = 'all';
     currentCategory = 'all';
     filterCards();
-    
-    // Nettoyer régulièrement le contenu parasite
-    setInterval(cleanParasiteContent, 5000);
   }
   
   // Initialiser les animations et l'application
