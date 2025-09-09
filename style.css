@@ -110,30 +110,33 @@
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
 }
 
-/* Message de rappel important */
+/* Message de rappel important - version bandeau bas */
 .important-notice {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: linear-gradient(145deg, rgba(40, 20, 10, 0.98), rgba(20, 20, 20, 0.95));
-  border: 3px solid #ff6b35;
-  border-radius: 15px;
+  border-top: 3px solid #ff6b35;
   padding: 0;
-  max-width: 600px;
-  width: 90%;
+  width: 100%;
   backdrop-filter: blur(15px);
   box-shadow: 
-    0 0 30px rgba(255, 107, 53, 0.6),
-    0 0 60px rgba(255, 107, 53, 0.3),
+    0 -5px 30px rgba(255, 107, 53, 0.6),
+    0 -10px 60px rgba(255, 107, 53, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  animation: pulseWarning 2s ease-in-out infinite;
+  animation: pulseWarning 3s ease-in-out infinite;
   opacity: 1;
   visibility: visible;
   transition: all 0.5s ease;
 }
 
+.important-notice.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+}
 .important-notice.hidden {
   opacity: 0;
   visibility: hidden;
@@ -1062,3 +1065,4 @@ body * {
   display: none !important;
   visibility: hidden !important;
 }
+
