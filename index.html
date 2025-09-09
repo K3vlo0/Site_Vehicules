@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,6 +16,17 @@
   <!-- Compteur de survivants -->
   <div class="survivor-counter">
     <div>Seuls <span class="number" id="survivorCount">0</span> rescapés sont encore en vie...</div>
+  </div>
+  
+  <!-- Message de rappel important -->
+  <div class="important-notice" id="importantNotice">
+    <div class="notice-content">
+      <div class="notice-icon">⚠️</div>
+      <div class="notice-text">
+        <strong>RAPPEL IMPORTANT :</strong> Les contenus proposés ici ne sont pas vendus mais offerts en contrepartie d'un don de soutien au serveur, conformément aux règles CFX.
+      </div>
+      <button class="notice-close" id="noticeClose">×</button>
+    </div>
   </div>
   
   <!-- Aide à la navigation -->
@@ -41,6 +51,111 @@
 </div>
 
 <style>
+/* Message de rappel important */
+.important-notice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, rgba(40, 20, 10, 0.98), rgba(20, 20, 20, 0.95));
+  border: 3px solid #ff6b35;
+  border-radius: 15px;
+  padding: 0;
+  max-width: 600px;
+  width: 90%;
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 0 30px rgba(255, 107, 53, 0.6),
+    0 0 60px rgba(255, 107, 53, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  animation: pulseWarning 2s ease-in-out infinite;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.5s ease;
+}
+
+.important-notice.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+@keyframes pulseWarning {
+  0%, 100% { 
+    box-shadow: 
+      0 0 30px rgba(255, 107, 53, 0.6),
+      0 0 60px rgba(255, 107, 53, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 40px rgba(255, 107, 53, 0.8),
+      0 0 80px rgba(255, 107, 53, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+.notice-content {
+  position: relative;
+  padding: 25px 50px 25px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.notice-icon {
+  font-size: 2rem;
+  color: #ff6b35;
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.notice-text {
+  flex: 1;
+  color: #eee;
+  font-family: 'Metal Mania', cursive;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.notice-text strong {
+  color: #ff6b35;
+  text-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+}
+
+.notice-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #ff6b35;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.notice-close:hover {
+  background: rgba(255, 107, 53, 0.2);
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+}
+
 /* Boutons sociaux avec logos rouillés */
 .social-buttons {
   position: fixed;
@@ -187,6 +302,24 @@
 
 /* Responsive pour mobile */
 @media (max-width: 768px) {
+  .important-notice {
+    max-width: 95%;
+    top: 40%;
+  }
+  
+  .notice-content {
+    padding: 20px 40px 20px 20px;
+    gap: 10px;
+  }
+  
+  .notice-icon {
+    font-size: 1.5rem;
+  }
+  
+  .notice-text {
+    font-size: 0.9rem;
+  }
+  
   .social-logo-btn {
     width: 60px;
     height: 60px;
@@ -198,6 +331,21 @@
 }
 
 @media (max-width: 480px) {
+  .important-notice {
+    top: 35%;
+  }
+  
+  .notice-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 30px 15px 15px;
+    gap: 8px;
+  }
+  
+  .notice-text {
+    font-size: 0.8rem;
+  }
+  
   .social-buttons {
     flex-direction: row;
     bottom: 10px;
@@ -847,10 +995,387 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+// Animation des particules de poussière
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  
+  for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.width = Math.random() * 4 + 2 + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// Animation de la fumée radioactive
+function createSmoke() {
+  const smokeContainer = document.getElementById('smoke');
+  
+  for (let i = 0; i < 20; i++) {
+    const smoke = document.createElement('div');
+    smoke.className = 'smoke-particle';
+    smoke.style.left = Math.random() * 100 + '%';
+    smoke.style.width = Math.random() * 80 + 40 + 'px';
+    smoke.style.height = smoke.style.width;
+    smoke.style.animationDelay = Math.random() * 25 + 's';
+    smoke.style.animationDuration = (Math.random() * 20 + 25) + 's';
+    smokeContainer.appendChild(smoke);
+  }
+}
+
+// Simulation du compteur de survivants
+function updateSurvivorCount() {
+  const counter = document.getElementById('survivorCount');
+  if (counter) {
+    const baseCount = 42;
+    const variation = Math.floor(Math.random() * 10) - 5;
+    const count = Math.max(1, baseCount + variation);
+    counter.textContent = count;
+  }
+}
+
+// Attendre le chargement complet du DOM
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll(".vehicle-card");
+  const categoryBtns = document.querySelectorAll(".category-btn");
+  const mainMenu = document.getElementById('main-menu');
+  const vehicleCatalog = document.getElementById('vehicle-catalog');
+  const categoryChoices = document.querySelectorAll('.category-choice');
+  const backButton = document.getElementById('back-to-menu');
+  const navigationHelp = document.getElementById('navigationHelp');
+  const importantNotice = document.getElementById('importantNotice');
+  const noticeClose = document.getElementById('noticeClose');
+  
+  let current = 0;
+  let currentCategory = 'all';
+  let currentCatalogType = 'all';
+  let filteredCards = [...cards];
+
+  console.log('Total véhicules chargés:', cards.length);
+  
+  // Compter les véhicules par catégorie pour debug
+  const categoryCounts = {};
+  cards.forEach(card => {
+    const category = card.getAttribute('data-category');
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+  console.log('Répartition par catégorie:', categoryCounts);
+
+  // Fonction pour masquer le message de rappel
+  function hideImportantNotice() {
+    if (importantNotice) {
+      importantNotice.classList.add('hidden');
+      setTimeout(() => {
+        importantNotice.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  // Fonction pour afficher le message de rappel
+  function showImportantNotice() {
+    if (importantNotice) {
+      importantNotice.style.display = 'block';
+      setTimeout(() => {
+        importantNotice.classList.remove('hidden');
+      }, 50);
+    }
+  }
+
+  // Event listener pour fermer le message avec le bouton X
+  if (noticeClose) {
+    noticeClose.addEventListener('click', hideImportantNotice);
+  }
+
+  // Afficher le menu principal, cacher le catalogue
+  function showMainMenu() {
+    vehicleCatalog.classList.add('hidden');
+    
+    if (navigationHelp) {
+      navigationHelp.style.display = 'none';
+    }
+    
+    setTimeout(() => {
+      vehicleCatalog.style.display = 'none';
+      mainMenu.style.display = 'flex';
+      
+      setTimeout(() => {
+        mainMenu.classList.remove('hidden');
+        showImportantNotice(); // Afficher le message quand on revient au menu
+      }, 50);
+    }, 500);
+    
+    currentCatalogType = 'all';
+  }
+
+  // Afficher le catalogue, cacher le menu principal
+  function showCatalog(catalogType) {
+    mainMenu.classList.add('hidden');
+    hideImportantNotice(); // Masquer le message quand on entre dans le catalogue
+    
+    setTimeout(() => {
+      mainMenu.style.display = 'none';
+      vehicleCatalog.style.display = 'block';
+      
+      if (navigationHelp && window.innerWidth > 768) {
+        navigationHelp.style.display = 'block';
+      }
+      
+      setTimeout(() => {
+        vehicleCatalog.classList.remove('hidden');
+      }, 50);
+    }, 500);
+    
+    currentCatalogType = catalogType;
+    currentCategory = 'all';
+    
+    // Réinitialiser les boutons de catégorie
+    categoryBtns.forEach(btn => btn.classList.remove('active'));
+    if (categoryBtns[0]) categoryBtns[0].classList.add('active');
+    
+    filterCards();
+  }
+
+  // Fonction principale de filtrage
+  function filterCards() {
+    console.log(`Filtrage: type=${currentCatalogType}, catégorie=${currentCategory}`);
+    
+    const allCards = document.querySelectorAll(".vehicle-card");
+    let visibleCards = [];
+    
+    allCards.forEach(card => {
+      let shouldShow = true;
+      
+      // Filtrer par type de catalogue (vanilla vs import)
+      if (currentCatalogType !== 'all') {
+        const cardType = card.getAttribute('data-type');
+        if (currentCatalogType === 'vanilla' && cardType !== 'vanilla') {
+          shouldShow = false;
+        } else if (currentCatalogType === 'import' && cardType !== 'import') {
+          shouldShow = false;
+        }
+      }
+      
+      // Filtrer par catégorie de véhicule
+      if (shouldShow && currentCategory !== 'all') {
+        const cardCategory = card.getAttribute('data-category');
+        if (cardCategory !== currentCategory) {
+          shouldShow = false;
+        }
+      }
+      
+      if (shouldShow) {
+        visibleCards.push(card);
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+        // Retirer toutes les classes d'état du carousel
+        card.classList.remove("active", "prev", "next", "far-prev", "far-next");
+      }
+    });
+    
+    filteredCards = visibleCards;
+    current = 0;
+    
+    console.log(`Véhicules affichés: ${filteredCards.length}`);
+    
+    // Compter par catégorie dans les résultats filtrés
+    const filteredCategoryCounts = {};
+    filteredCards.forEach(card => {
+      const category = card.getAttribute('data-category');
+      filteredCategoryCounts[category] = (filteredCategoryCounts[category] || 0) + 1;
+    });
+    console.log('Répartition filtrée:', filteredCategoryCounts);
+    
+    updateCarousel();
+  }
+
+  // Mettre à jour l'affichage du carousel
+  function updateCarousel() {
+    // Retirer toutes les classes d'état
+    const allCards = document.querySelectorAll(".vehicle-card");
+    allCards.forEach(card => {
+      card.classList.remove("active", "prev", "next", "far-prev", "far-next");
+    });
+    
+    if (filteredCards.length === 0) {
+      console.log('Aucun véhicule à afficher');
+      return;
+    }
+    
+    // Appliquer les classes de position seulement aux cartes visibles
+    filteredCards.forEach((card, index) => {
+      const position = index - current;
+      
+      if (position === 0) {
+        card.classList.add("active");
+      } else if (position === 1) {
+        card.classList.add("next");
+      } else if (position === -1) {
+        card.classList.add("prev");
+      } else if (position === 2) {
+        card.classList.add("far-next");
+      } else if (position === -2) {
+        card.classList.add("far-prev");
+      }
+    });
+  }
+
+  // Navigation suivant avec boucle
+  function nextCard() {
+    if (filteredCards.length === 0) return;
+    current = (current + 1) % filteredCards.length;
+    updateCarousel();
+  }
+
+  // Navigation précédent avec boucle
+  function prevCard() {
+    if (filteredCards.length === 0) return;
+    current = (current - 1 + filteredCards.length) % filteredCards.length;
+    updateCarousel();
+  }
+
+  // Event listeners pour les choix de catalogue (menu principal)
+  categoryChoices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      const catalogType = choice.getAttribute('data-type');
+      console.log('Catalogue sélectionné:', catalogType);
+      showCatalog(catalogType);
+    });
+  });
+
+  // Event listener pour le bouton retour
+  if (backButton) {
+    backButton.addEventListener('click', showMainMenu);
+  }
+
+  // Navigation par catégories (dans le catalogue)
+  categoryBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      categoryBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      
+      const category = btn.getAttribute('data-category');
+      console.log('Catégorie sélectionnée:', category);
+      currentCategory = category;
+      current = 0;
+      filterCards();
+    });
+  });
+
+  // Boutons de navigation du carousel
+  const nextBtn = document.getElementById("next");
+  const prevBtn = document.getElementById("prev");
+  
+  if (nextBtn) {
+    nextBtn.addEventListener("click", nextCard);
+  }
+  
+  if (prevBtn) {
+    prevBtn.addEventListener("click", prevCard);
+  }
+
+  // Navigation au clavier
+  document.addEventListener("keydown", (e) => {
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
+    if (filteredCards.length === 0) return;
+    
+    switch(e.key) {
+      case "ArrowRight":
+        e.preventDefault();
+        nextCard();
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        prevCard();
+        break;
+      case "Escape":
+        e.preventDefault();
+        showMainMenu();
+        break;
+      case " ":
+        e.preventDefault();
+        nextCard();
+        break;
+    }
+  });
+
+  // Clic sur une carte pour la sélectionner
+  document.addEventListener("click", (e) => {
+    const card = e.target.closest('.vehicle-card');
+    if (card && filteredCards.includes(card)) {
+      const filteredIndex = filteredCards.indexOf(card);
+      if (filteredIndex !== -1) {
+        current = filteredIndex;
+        updateCarousel();
+      }
+    }
+  });
+
+  // Support tactile pour mobile
+  let startX = 0;
+  let endX = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
+    startX = e.touches[0].clientX;
+  });
+
+  document.addEventListener('touchend', (e) => {
+    if (!vehicleCatalog || vehicleCatalog.style.display === 'none') return;
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const diffX = startX - endX;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(diffX) > minSwipeDistance) {
+      if (diffX > 0) {
+        nextCard();
+      } else {
+        prevCard();
+      }
+    }
+  }
+
+  // Initialisation de l'application
+  function initializeApp() {
+    console.log('Initialisation de l\'application');
+    
+    mainMenu.style.display = 'flex';
+    vehicleCatalog.style.display = 'none';
+    mainMenu.classList.remove('hidden');
+    vehicleCatalog.classList.add('hidden');
+    
+    if (navigationHelp) {
+      navigationHelp.style.display = 'none';
+    }
+    
+    // Afficher le message de rappel au démarrage
+    showImportantNotice();
+    
+    // Initialiser avec tous les véhicules
+    currentCatalogType = 'all';
+    currentCategory = 'all';
+    filterCards();
+  }
+  
+  // Initialiser les animations et l'application
+  createParticles();
+  createSmoke();
+  updateSurvivorCount();
+  
+  // Mettre à jour le compteur toutes les 30 secondes
+  setInterval(updateSurvivorCount, 30000);
+  
+  initializeApp();
+});
+  </script>
 </body>
 </html>
-
-
-
-
