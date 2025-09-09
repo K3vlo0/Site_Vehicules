@@ -110,6 +110,61 @@
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
 }
 
+/* Message d'avertissement important */
+.important-notice {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, rgba(220, 20, 20, 0.95), rgba(180, 0, 0, 0.9));
+  border: 3px solid #ff4444;
+  border-radius: 15px;
+  padding: 20px 30px;
+  font-family: 'Metal Mania', cursive;
+  color: #fff;
+  font-size: 1.1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 150;
+  max-width: 90%;
+  text-align: center;
+  animation: importantPulse 2s ease-in-out infinite alternate;
+  transition: all 0.5s ease-in-out;
+}
+
+.important-notice::before {
+  content: '⚠️';
+  font-size: 1.5rem;
+  margin-right: 15px;
+  vertical-align: middle;
+  text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+}
+
+.important-notice.hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(50px);
+  pointer-events: none;
+}
+
+@keyframes importantPulse {
+  0% { 
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.8),
+      0 0 20px rgba(255, 68, 68, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  100% { 
+    box-shadow: 
+      0 8px 30px rgba(0, 0, 0, 0.9),
+      0 0 30px rgba(255, 68, 68, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
 /* Aide à la navigation */
 .navigation-help {
   position: fixed;
@@ -706,6 +761,12 @@ h1 {
     height: 60px;
     font-size: 1.2rem;
   }
+  
+  .important-notice {
+    bottom: 30px;
+    font-size: 1rem;
+    padding: 15px 25px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -719,6 +780,7 @@ h1 {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+    gap: 15px;
   }
   
   .social-btn {
@@ -750,6 +812,18 @@ h1 {
 
   .vehicle-card img {
     height: 150px;
+  }
+  
+  .important-notice {
+    bottom: 20px;
+    font-size: 0.9rem;
+    padding: 12px 20px;
+    line-height: 1.4;
+  }
+  
+  .important-notice::before {
+    font-size: 1.2rem;
+    margin-right: 10px;
   }
 }
 
@@ -811,7 +885,7 @@ span:empty {
 }
 
 /* Protection finale - masquer tout ce qui n'est pas dans nos conteneurs */
-body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(#main-menu):not(#vehicle-catalog):not(script):not(style):not(link) {
+body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help):not(.social-buttons):not(h1):not(#main-menu):not(#vehicle-catalog):not(.important-notice):not(script):not(style):not(link) {
   position: absolute !important;
   left: -9999px !important;
   opacity: 0 !important;
