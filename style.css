@@ -825,21 +825,22 @@ h1 {
   }
 
   .important-notice {
-    max-width: 95%;
-    top: 40%;
+    padding: 0;
   }
   
   .notice-content {
-    padding: 20px 40px 20px 20px;
+    padding: 12px 20px;
     gap: 10px;
+    flex-direction: row;
   }
   
   .notice-icon {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   
   .notice-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
   }
 
   .survivor-counter {
@@ -854,7 +855,7 @@ h1 {
   }
   
   .social-buttons {
-    bottom: 10px;
+    bottom: 60px; /* Ajuster pour le bandeau */
     left: 10px;
     gap: 10px;
   }
@@ -902,23 +903,28 @@ h1 {
   }
 
   .important-notice {
-    top: 35%;
+    padding: 0;
   }
   
   .notice-content {
+    padding: 10px 15px;
+    gap: 8px;
     flex-direction: column;
     text-align: center;
-    padding: 15px 30px 15px 15px;
-    gap: 8px;
+  }
+  
+  .notice-icon {
+    font-size: 1rem;
   }
   
   .notice-text {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    line-height: 1.1;
   }
 
   .social-buttons {
     flex-direction: row;
-    bottom: 10px;
+    bottom: 60px; /* Ajuster pour le bandeau */
     left: 50%;
     transform: translateX(-50%);
     gap: 15px;
