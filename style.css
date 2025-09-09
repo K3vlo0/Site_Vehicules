@@ -1019,3 +1019,40 @@ body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.important-notic
   visibility: hidden !important;
   display: none !important;
 }
+
+/* Protection spécifique contre le texte orphelin */
+body::after {
+  content: "" !important;
+}
+
+/* Masquer tout texte qui s'affiche en dehors des conteneurs */
+body > text,
+body > textNode,
+body > string {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Masquer les fragments de code HTML qui apparaissent */
+*:contains("images/"),
+*:contains("alt="),
+*:contains("src=") {
+  display: none !important;
+}
+
+/* Protection contre l'affichage de fragments HTML */
+body {
+  overflow: hidden;
+}
+
+body * {
+  white-space: normal;
+}
+
+/* Empêcher l'affichage de contenu malformé */
+*[src*="apocalyptic"],
+*[alt*="franchissement"] {
+  display: none !important;
+  visibility: hidden !important;
+}
