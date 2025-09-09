@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const categoryChoices = document.querySelectorAll('.category-choice');
   const backButton = document.getElementById('back-to-menu');
   const navigationHelp = document.getElementById('navigationHelp');
+  const importantNotice = document.getElementById('importantNotice');
   
   let current = 0;
   let currentCategory = 'all';
@@ -74,6 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
       navigationHelp.style.display = 'none';
     }
     
+    // Afficher le message d'avertissement
+    if (importantNotice) {
+      importantNotice.classList.remove('hidden');
+    }
+    
     setTimeout(() => {
       vehicleCatalog.style.display = 'none';
       mainMenu.style.display = 'flex';
@@ -89,6 +95,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Afficher le catalogue, cacher le menu principal
   function showCatalog(catalogType) {
     mainMenu.classList.add('hidden');
+    
+    // Cacher le message d'avertissement
+    if (importantNotice) {
+      importantNotice.classList.add('hidden');
+    }
     
     setTimeout(() => {
       mainMenu.style.display = 'none';
@@ -328,6 +339,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (navigationHelp) {
       navigationHelp.style.display = 'none';
+    }
+    
+    // Afficher le message d'avertissement au début
+    if (importantNotice) {
+      importantNotice.classList.remove('hidden');
     }
     
     // Initialiser avec tous les véhicules
