@@ -827,7 +827,7 @@ h1 {
   .important-notice {
     width: 95%;
     max-width: 95vw;
-    bottom: 15px;
+    bottom: 80px; /* Ajusté pour tablette */
   }
   
   .notice-content {
@@ -857,7 +857,7 @@ h1 {
   }
   
   .social-buttons {
-    bottom: 10px; /* Retour position normale */
+    bottom: 10px; /* Position normale */
     left: 10px;
     gap: 10px;
   }
@@ -907,7 +907,7 @@ h1 {
   .important-notice {
     width: 98%;
     max-width: 98vw;
-    bottom: 10px;
+    bottom: 60px; /* Ajusté pour mobile */
   }
   
   .notice-content {
