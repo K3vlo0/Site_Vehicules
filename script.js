@@ -346,6 +346,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Fonction pour nettoyer le contenu parasite
+  function cleanParasiteContent() {
+    // Supprimer les nœuds de texte orphelins qui contiennent du code HTML
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    
+    const textNodes = [];
+    let node;
+    
+    while (node = walker.nextNode()) {
+      textNodes.push(node);
+    }
+    
+    textNodes.forEach(textNode => {
+      const content = textNode.textContent.trim();
+      // Supprimer les nœuds qui contiennent des fragments HTML
+      if (content.includes('images/') || content.includes('alt=') || content.includes('src=') || content.includes('apocalyptic.png')) {
+        textNode.remove();
+      }
+    });
+  }
+
   // Initialisation de l'application
   function initializeApp() {
     console.log('Initialisation de l\'application');
@@ -359,6 +385,9 @@ document.addEventListener('DOMContentLoaded', function() {
       navigationHelp.style.display = 'none';
     }
     
+    // Nettoyer le contenu parasite
+    cleanParasiteContent();
+    
     // Afficher le message de rappel au démarrage
     showImportantNotice();
     
@@ -366,6 +395,9 @@ document.addEventListener('DOMContentLoaded', function() {
     currentCatalogType = 'all';
     currentCategory = 'all';
     filterCards();
+    
+    // Nettoyer régulièrement le contenu parasite
+    setInterval(cleanParasiteContent, 5000);
   }
   
   // Initialiser les animations et l'application
