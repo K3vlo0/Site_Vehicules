@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const categoryChoices = document.querySelectorAll('.category-choice');
   const backButton = document.getElementById('back-to-menu');
   const navigationHelp = document.getElementById('navigationHelp');
+  const importantNotice = document.getElementById('importantNotice');
+  const noticeClose = document.getElementById('noticeClose');
   
   let current = 0;
   let currentCategory = 'all';
@@ -66,6 +68,31 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   console.log('Répartition par catégorie:', categoryCounts);
 
+  // Fonction pour masquer le message de rappel
+  function hideImportantNotice() {
+    if (importantNotice) {
+      importantNotice.classList.add('hidden');
+      setTimeout(() => {
+        importantNotice.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  // Fonction pour afficher le message de rappel
+  function showImportantNotice() {
+    if (importantNotice) {
+      importantNotice.style.display = 'block';
+      setTimeout(() => {
+        importantNotice.classList.remove('hidden');
+      }, 50);
+    }
+  }
+
+  // Event listener pour fermer le message avec le bouton X
+  if (noticeClose) {
+    noticeClose.addEventListener('click', hideImportantNotice);
+  }
+
   // Afficher le menu principal, cacher le catalogue
   function showMainMenu() {
     vehicleCatalog.classList.add('hidden');
@@ -80,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       setTimeout(() => {
         mainMenu.classList.remove('hidden');
+        showImportantNotice(); // Afficher le message quand on revient au menu
       }, 50);
     }, 500);
     
@@ -89,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Afficher le catalogue, cacher le menu principal
   function showCatalog(catalogType) {
     mainMenu.classList.add('hidden');
+    hideImportantNotice(); // Masquer le message quand on entre dans le catalogue
     
     setTimeout(() => {
       mainMenu.style.display = 'none';
@@ -329,6 +358,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navigationHelp) {
       navigationHelp.style.display = 'none';
     }
+    
+    // Afficher le message de rappel au démarrage
+    showImportantNotice();
     
     // Initialiser avec tous les véhicules
     currentCatalogType = 'all';
