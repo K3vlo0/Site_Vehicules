@@ -110,33 +110,30 @@
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
 }
 
-/* Message de rappel important - version bandeau bas */
+/* Message de rappel important */
 .important-notice {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: linear-gradient(145deg, rgba(40, 20, 10, 0.98), rgba(20, 20, 20, 0.95));
-  border-top: 3px solid #ff6b35;
+  border: 3px solid #ff6b35;
+  border-radius: 15px;
   padding: 0;
-  width: 100%;
+  max-width: 600px;
+  width: 90%;
   backdrop-filter: blur(15px);
   box-shadow: 
-    0 -5px 30px rgba(255, 107, 53, 0.6),
-    0 -10px 60px rgba(255, 107, 53, 0.3),
+    0 0 30px rgba(255, 107, 53, 0.6),
+    0 0 60px rgba(255, 107, 53, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  animation: pulseWarning 3s ease-in-out infinite;
+  animation: pulseWarning 2s ease-in-out infinite;
   opacity: 1;
   visibility: visible;
   transition: all 0.5s ease;
 }
 
-.important-notice.hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(100%);
-}
 .important-notice.hidden {
   opacity: 0;
   visibility: hidden;
@@ -828,21 +825,23 @@ h1 {
   }
 
   .important-notice {
-    padding: 0;
+    width: 95%;
+    max-width: 95vw;
+    bottom: 15px;
   }
   
   .notice-content {
-    padding: 12px 20px;
-    gap: 10px;
+    padding: 12px 15px;
+    gap: 8px;
     flex-direction: row;
   }
   
   .notice-icon {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
   .notice-text {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     line-height: 1.2;
   }
 
@@ -858,7 +857,7 @@ h1 {
   }
   
   .social-buttons {
-    bottom: 60px; /* Ajuster pour le bandeau */
+    bottom: 10px; /* Retour position normale */
     left: 10px;
     gap: 10px;
   }
@@ -906,12 +905,14 @@ h1 {
   }
 
   .important-notice {
-    padding: 0;
+    width: 98%;
+    max-width: 98vw;
+    bottom: 10px;
   }
   
   .notice-content {
-    padding: 10px 15px;
-    gap: 8px;
+    padding: 8px 12px;
+    gap: 6px;
     flex-direction: column;
     text-align: center;
   }
@@ -921,13 +922,13 @@ h1 {
   }
   
   .notice-text {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     line-height: 1.1;
   }
 
   .social-buttons {
     flex-direction: row;
-    bottom: 60px; /* Ajuster pour le bandeau */
+    bottom: 10px; /* Position normale */
     left: 50%;
     transform: translateX(-50%);
     gap: 15px;
@@ -1065,4 +1066,3 @@ body * {
   display: none !important;
   visibility: hidden !important;
 }
-
