@@ -198,87 +198,7 @@
   color: #fff;
 }
 
-/* Boutons sociaux style post-apo */
-.social-buttons {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  z-index: 100;
-}
-
-.social-btn {
-  background: linear-gradient(145deg, rgba(40, 40, 40, 0.95), rgba(20, 20, 20, 0.9));
-  border: 2px solid #666;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-family: 'Metal Mania', cursive;
-  color: #ddd;
-  text-decoration: none;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 4px 15px rgba(0, 0, 0, 0.5);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-  position: relative;
-  overflow: hidden;
-}
-
-.social-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 2px,
-    rgba(139, 69, 19, 0.1) 2px,
-    rgba(139, 69, 19, 0.1) 4px
-  );
-  pointer-events: none;
-}
-
-.social-btn:hover {
-  transform: translateY(-2px);
-  border-color: #8B4513;
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 6px 20px rgba(139, 69, 19, 0.4);
-  text-shadow: 0 0 10px rgba(205, 133, 63, 0.8);
-}
-
-.social-btn.discord:hover {
-  color: #7289da;
-  border-color: #7289da;
-}
-
-.social-btn.tiktok:hover {
-  color: #ff0050;
-  border-color: #ff0050;
-}
-
-.social-btn.topserveur:hover {
-  color: #ffd700;
-  border-color: #ffd700;
-}
-
-.social-icon {
-  width: 20px;
-  height: 20px;
-  font-size: 16px;
-}
-
-/* Corps principal - CORRIGÉ POUR MOBILE */
+/* Corps principal - TOTALEMENT CORRIGÉ POUR MOBILE */
 body {
   font-family: 'Rye', cursive;
   background: #111;
@@ -291,7 +211,7 @@ body {
   min-height: 100vh;
 }
 
-/* Background image pour desktop */
+/* Background image - Version desktop */
 body::before {
   content: '';
   position: fixed;
@@ -299,10 +219,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./images/day-of-decay-background.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url('./images/day-of-decay-background.png') center/cover no-repeat;
   background-attachment: fixed;
   z-index: -2;
   pointer-events: none;
@@ -696,27 +613,62 @@ h1 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Media Queries pour responsive */
-@media (min-aspect-ratio: 16/9) {
-  body::before {
-    background-size: 100% 100%;
+/* ========== RESPONSIVE MOBILE - CORRECTIONS TOTALES ========== */
+
+/* Tablettes et petits écrans */
+@media (max-width: 1024px) {
+  .category-choice-container {
+    gap: 40px;
+  }
+  
+  .category-choice {
+    width: 280px;
+    padding: 35px 25px;
+  }
+  
+  .vehicle-card {
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  .vehicle-card.next {
+    transform: translateX(300px) scale(0.85);
+  }
+  
+  .vehicle-card.prev {
+    transform: translateX(-300px) scale(0.85);
+  }
+  
+  .vehicle-card.far-next {
+    transform: translateX(600px) scale(0.7);
+  }
+  
+  .vehicle-card.far-prev {
+    transform: translateX(-600px) scale(0.7);
   }
 }
 
-/* CORRECTION PRINCIPALE POUR MOBILE */
+/* Mobiles et tablettes */
 @media (max-width: 768px) {
-  /* Correction du background pour mobile */
+  /* CORRECTION PRINCIPALE DU BACKGROUND POUR MOBILE */
   body::before {
-    background-attachment: scroll;
+    background-attachment: scroll !important;
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    background-repeat: no-repeat;
   }
   
-  /* Ajout d'un fallback background pour très petits écrans */
+  /* Fallback background pour garantir l'affichage */
   body {
     background: #111 url('./images/day-of-decay-background.png') center/cover no-repeat;
+    background-attachment: scroll;
     min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 15px;
+    letter-spacing: 1px;
   }
 
   .survivor-counter {
@@ -736,19 +688,21 @@ h1 {
     gap: 10px;
   }
   
-  .social-btn {
-    padding: 8px 15px;
-    font-size: 0.8rem;
+  .main-menu {
+    min-height: 60vh;
+    padding: 30px 15px;
   }
   
   .category-choice-container {
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
+    align-items: center;
   }
   
   .category-choice {
     width: 280px;
     padding: 30px 20px;
+    max-width: 90vw;
   }
   
   .category-icon {
@@ -765,81 +719,312 @@ h1 {
     font-size: 1.5rem;
   }
   
+  .category-choice p {
+    font-size: 0.9rem;
+  }
+  
+  .back-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .category-nav {
+    gap: 10px;
+    margin: 15px 0;
+    padding: 0 10px;
+  }
+  
+  .category-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+  
+  .container {
+    height: 55vh;
+    padding: 0 10px;
+  }
+  
+  .vehicle-card {
+    width: 260px;
+    min-width: 260px;
+    padding: 18px;
+    margin: 0 10px;
+  }
+  
+  .vehicle-card img {
+    height: 160px;
+  }
+  
+  .vehicle-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  
+  .vehicle-card li {
+    font-size: 0.85rem;
+    margin: 6px 0;
+    padding: 3px 0;
+  }
+  
+  .vehicle-category {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    top: 12px;
+    right: 12px;
+  }
+  
+  .vehicle-card.next {
+    transform: translateX(280px) scale(0.8);
+  }
+  
+  .vehicle-card.prev {
+    transform: translateX(-280px) scale(0.8);
+  }
+  
+  .vehicle-card.far-next {
+    transform: translateX(560px) scale(0.65);
+  }
+  
+  .vehicle-card.far-prev {
+    transform: translateX(-560px) scale(0.65);
+  }
+  
+  .controls {
+    margin-top: 20px;
+    gap: 40px;
+  }
+  
   .controls button {
     width: 60px;
     height: 60px;
     font-size: 1.2rem;
+    padding: 15px;
   }
   
   .important-notice {
-    bottom: 30px;
+    bottom: 25px;
     font-size: 1.1rem;
     padding: 15px 25px;
+    max-width: 95%;
+  }
+  
+  .important-notice::before {
+    font-size: 1.5rem;
+    margin-right: 12px;
   }
 }
 
+/* Petits mobiles */
 @media (max-width: 480px) {
-  /* Optimisation supplémentaire pour très petits écrans */
+  /* Background optimisé pour très petits écrans */
   body::before {
-    background-attachment: scroll;
+    background-attachment: scroll !important;
     background-size: cover;
     background-position: center top;
   }
   
+  body {
+    background-attachment: scroll !important;
+  }
+  
   h1 {
     font-size: 2rem;
-    margin: 15px;
+    margin: 10px;
+    letter-spacing: 1px;
+  }
+
+  .survivor-counter {
+    top: 5px;
+    right: 5px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 
   .social-buttons {
     flex-direction: row;
-    bottom: 10px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
-    gap: 15px;
+    gap: 12px;
   }
   
-  .social-btn {
-    padding: 6px 10px;
-    font-size: 0.7rem;
+  .main-menu {
+    min-height: 50vh;
+    padding: 20px 10px;
   }
   
-  .social-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 14px;
+  .category-choice {
+    width: 260px;
+    padding: 25px 15px;
+    max-width: 95vw;
+  }
+  
+  .category-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .category-icon img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .category-choice h2 {
+    font-size: 1.3rem;
+    margin: 15px 0 8px;
+  }
+  
+  .category-choice p {
+    font-size: 0.85rem;
+  }
+  
+  .back-button-container {
+    padding: 15px;
+  }
+  
+  .back-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .category-nav {
+    gap: 8px;
+    margin: 10px 0;
+    padding: 0 5px;
+  }
+  
+  .category-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+  
+  .container {
+    height: 50vh;
+    padding: 0 5px;
+  }
+  
+  .vehicle-card {
+    width: 240px;
+    min-width: 240px;
+    padding: 15px;
+    margin: 0 8px;
+  }
+  
+  .vehicle-card img {
+    height: 140px;
+  }
+  
+  .vehicle-card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .vehicle-card li {
+    font-size: 0.8rem;
+    margin: 5px 0;
+    padding: 2px 0;
+  }
+  
+  .vehicle-category {
+    padding: 3px 6px;
+    font-size: 0.65rem;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .vehicle-card.next {
+    transform: translateX(260px) scale(0.75);
+  }
+  
+  .vehicle-card.prev {
+    transform: translateX(-260px) scale(0.75);
+  }
+  
+  .vehicle-card.far-next {
+    transform: translateX(520px) scale(0.6);
+  }
+  
+  .vehicle-card.far-prev {
+    transform: translateX(-520px) scale(0.6);
+  }
+  
+  .controls {
+    margin-top: 15px;
+    gap: 30px;
   }
   
   .controls button {
     width: 50px;
     height: 50px;
     font-size: 1rem;
-  }
-  
-  .controls {
-    gap: 30px;
-  }
-
-  .vehicle-card {
-    width: 250px;
-    min-width: 250px;
-    padding: 15px;
-  }
-
-  .vehicle-card img {
-    height: 150px;
+    padding: 12px;
   }
   
   .important-notice {
-    bottom: 20px;
+    bottom: 15px;
     font-size: 1rem;
     padding: 12px 20px;
     line-height: 1.4;
+    max-width: 98%;
   }
   
   .important-notice::before {
-    font-size: 1.4rem;
-    margin-right: 10px;
+    font-size: 1.3rem;
+    margin-right: 8px;
+  }
+}
+
+/* Très petits mobiles */
+@media (max-width: 360px) {
+  h1 {
+    font-size: 1.8rem;
+    margin: 8px;
+  }
+  
+  .category-choice {
+    width: 240px;
+    padding: 20px 12px;
+  }
+  
+  .category-choice h2 {
+    font-size: 1.2rem;
+  }
+  
+  .vehicle-card {
+    width: 220px;
+    min-width: 220px;
+    padding: 12px;
+  }
+  
+  .vehicle-card img {
+    height: 120px;
+  }
+  
+  .vehicle-card h2 {
+    font-size: 1rem;
+  }
+  
+  .vehicle-card li {
+    font-size: 0.75rem;
+  }
+  
+  .vehicle-card.next {
+    transform: translateX(240px) scale(0.7);
+  }
+  
+  .vehicle-card.prev {
+    transform: translateX(-240px) scale(0.7);
+  }
+  
+  .controls button {
+    width: 45px;
+    height: 45px;
+    font-size: 0.9rem;
+  }
+  
+  .important-notice {
+    font-size: 0.9rem;
+    padding: 10px 15px;
   }
 }
 
