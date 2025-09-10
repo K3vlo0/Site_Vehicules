@@ -110,24 +110,24 @@
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
 }
 
-/* Message d'avertissement important */
+/* Message d'avertissement important - Modifié pour s'harmoniser avec le thème */
 .important-notice {
   position: fixed;
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(145deg, rgba(220, 20, 20, 0.95), rgba(180, 0, 0, 0.9));
-  border: 3px solid #ff4444;
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(40, 20, 10, 0.9));
+  border: 3px solid #CD853F;
   border-radius: 15px;
   padding: 20px 30px;
   font-family: 'Metal Mania', cursive;
-  color: #fff;
-  font-size: 1.1rem;
+  color: #CD853F;
+  font-size: 1.3rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(15px);
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(255, 68, 68, 0.3),
+    0 0 20px rgba(205, 133, 63, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   z-index: 150;
   max-width: 90%;
@@ -138,10 +138,10 @@
 
 .important-notice::before {
   content: '⚠️';
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-right: 15px;
   vertical-align: middle;
-  text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+  text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
 }
 
 .important-notice.hidden {
@@ -154,13 +154,13 @@
   0% { 
     box-shadow: 
       0 8px 25px rgba(0, 0, 0, 0.8),
-      0 0 20px rgba(255, 68, 68, 0.3),
+      0 0 20px rgba(205, 133, 63, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   100% { 
     box-shadow: 
       0 8px 30px rgba(0, 0, 0, 0.9),
-      0 0 30px rgba(255, 68, 68, 0.6),
+      0 0 30px rgba(205, 133, 63, 0.6),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 }
@@ -764,7 +764,7 @@ h1 {
   
   .important-notice {
     bottom: 30px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     padding: 15px 25px;
   }
 }
@@ -816,13 +816,13 @@ h1 {
   
   .important-notice {
     bottom: 20px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 12px 20px;
     line-height: 1.4;
   }
   
   .important-notice::before {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-right: 10px;
   }
 }
