@@ -129,7 +129,20 @@
     drop-shadow(0 0 15px currentColor);
 }
 
-/* Couleurs spécifiques au hover */
+/* Couleurs spécifiques au hover pour Tebex */
+.social-logo-btn.tebex:hover {
+  border-color: #ff6b35;
+  box-shadow: 
+    0 8px 25px rgba(255, 107, 53, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.social-logo-btn.tebex:hover .social-logo {
+  filter: 
+    brightness(1.2) 
+    contrast(1.2) 
+    drop-shadow(0 0 15px #ff6b35);
+}
 .social-logo-btn.topserveur:hover {
   border-color: #DAA520;
   box-shadow: 
@@ -1748,6 +1761,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
