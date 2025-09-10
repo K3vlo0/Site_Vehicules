@@ -30,15 +30,25 @@ function createSmoke() {
   }
 }
 
-// Simulation du compteur de survivants
-function updateSurvivorCount() {
-  const counter = document.getElementById('survivorCount');
+// Système de comptage des clics Tebex
+function updateTebexCount() {
+  const counter = document.getElementById('tebexCount');
   if (counter) {
-    const baseCount = 42;
-    const variation = Math.floor(Math.random() * 10) - 5;
-    const count = Math.max(1, baseCount + variation);
+    // Récupérer le compteur actuel depuis le stockage local
+    let count = localStorage.getItem('tebexClickCount');
+    if (!count) {
+      count = 0;
+    }
     counter.textContent = count;
   }
+}
+
+// Fonction pour incrémenter le compteur
+function incrementTebexCount() {
+  let count = localStorage.getItem('tebexClickCount') || 0;
+  count = parseInt(count) + 1;
+  localStorage.setItem('tebexClickCount', count);
+  updateTebexCount();
 }
 
 // Attendre le chargement complet du DOM
@@ -51,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const backButton = document.getElementById('back-to-menu');
   const navigationHelp = document.getElementById('navigationHelp');
   const importantNotice = document.getElementById('importantNotice');
+  const tebexButton = document.querySelector('.social-logo-btn.tebex');
+  if (tebexButton) {
+  tebexButton.addEventListener('click', function() {
+    incrementTebexCount();
+  });
+}
   
   let current = 0;
   let currentCategory = 'all';
@@ -355,10 +371,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialiser les animations et l'application
   createParticles();
   createSmoke();
-  updateSurvivorCount();
+  updateTebexCount();
   
   // Mettre à jour le compteur toutes les 30 secondes
-  setInterval(updateSurvivorCount, 30000);
+  setInterval(updateTebexCount, 30000);
   
   initializeApp();
 });
+
