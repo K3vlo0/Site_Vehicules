@@ -248,7 +248,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 
-    2px 2px 0px #806d5b,
+    2px 2px 0px #744f3a,
     4px 4px 8px rgba(139, 69, 19, 0.6),
     6px 6px 12px rgba(0, 0, 0, 0.8);
   font-weight: bold;
@@ -1088,6 +1088,7 @@ body > *:not(.particles):not(.smoke):not(.survivor-counter):not(.navigation-help
   visibility: hidden !important;
   display: none !important;
 }
+
 
 
 
